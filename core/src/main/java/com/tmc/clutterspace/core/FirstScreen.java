@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,6 +19,7 @@ public class FirstScreen implements Screen {
 
     Texture texture,texture2,backgroundTexture;
     private Sprite sprite ,sprite2;
+    private Music music_level1;
 
     public  FirstScreen(final Main game){
 
@@ -27,6 +29,7 @@ public class FirstScreen implements Screen {
         backgroundTexture = new Texture(Gdx.files.internal("background.jpg"));
         texture = new Texture(Gdx.files.internal("lion.png"));
         texture2 = new Texture(Gdx.files.internal("pidgey.png"));
+        music_level1 = Gdx.audio.newMusic(Gdx.files.internal("background.mp3"));
         sprite = new Sprite(texture);
         sprite2 = new Sprite(texture2);
     }
@@ -34,6 +37,8 @@ public class FirstScreen implements Screen {
     public void render(float v) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+        music_level1.setLooping(true);
+        music_level1.play();
 
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
             if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT))
