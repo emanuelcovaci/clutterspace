@@ -1,0 +1,63 @@
+buildscript {
+    //Defines the repositories required by this script, e.g. hosting the android plugin
+    repositories {
+        //local maven repository (advanced use)
+        mavenLocal()
+        //maven central repository, needed for the android plugin
+        mavenCentral()
+        //snapshot repository (in case this script depends on snapshot/prerelease artifacts)
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        jcenter()
+    }
+    dependencies {
+    }
+}
+
+allprojects  {
+  apply plugin: "eclipse"
+  apply plugin: "idea"
+
+  group = 'com.tmc.clutterspace'
+  version = '1.0-SNAPSHOT'
+  //Defines 'extra' (custom) properties for all projects
+  ext {
+    appName = "clutterspace"
+    //Versions of the libgdx dependencies (used further below on those 'compile' lines)
+    gdxVersion = "1.9.6"
+    guavaVersion = "22.0-rc1"
+  }
+  
+  repositories {
+    mavenLocal();
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+  }
+}
+
+project(":core") {
+    //Uses the java gradle plugin
+    apply plugin: "java"
+
+    dependencies {
+        //Defines dependencies for the :core project, in this example the gdx dependency
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        compile "com.google.guava:guava:$guavaVersion"
+    }
+}
+
+project(":desktop") {
+    //Uses the java plugin (provides compiling, execution, etc.).
+    //That one is bundled with gradle, so we didn’t have to define it in the buildscript section.
+    apply plugin: "java"
+
+    //Defines dependencies for the :desktop project
+    dependencies {
+        //Adds dependency on the :core project as well as the gdx lwjgl backend and native dependencies
+        compile project(":core")
+        compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+    }
+}

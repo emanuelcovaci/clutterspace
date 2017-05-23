@@ -1,0 +1,7 @@
+
+description = 'Main Core'
+dependencies {
+    compile group: 'com.badlogicgames.gdx', name: 'gdx', version:'1.9.6'
+    compile group: 'com.google.guava', name: 'guava', version:'22.0-rc1'
+    compile group: 'com.badlogicgames.gdx', name: 'gdx-box2d', version:'1.9.6'
+}
