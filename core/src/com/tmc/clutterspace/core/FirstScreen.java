@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.World;
+import com.tmc.clutterspace.core.utility.AssetLoader;
 
 /**
  * Created by emanuel on 20.05.2017.
@@ -43,12 +44,10 @@ public class FirstScreen implements Screen {
 
         b = w.createBody(bodyDef);
         
-        this.game.vec = b.getPosition();
-        System.out.println(Gdx.files.internal("background.jpg"));
-        backgroundTexture = new Texture(Gdx.files.internal("background.jpg"));
-        texture = new Texture(Gdx.files.internal("lion.png"));
-        texture2 = new Texture(Gdx.files.internal("pidgey.png"));
-        music_level1 = Gdx.audio.newMusic(Gdx.files.internal("background.mp3"));
+        backgroundTexture = AssetLoader.get("background.jpg", Texture.class);
+        texture = AssetLoader.get("lion.png", Texture.class);
+        texture2 = AssetLoader.get("pidgey.png", Texture.class);
+        music_level1 = AssetLoader.get("background.mp3", Music.class);
         sprite = new Sprite(texture);
         sprite2 = new Sprite(texture2);
     }

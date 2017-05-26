@@ -5,11 +5,4 @@
   <classpathentry kind="src" path="/clutterspace-core"/>
   <classpathentry kind="output" path="bin"/>
   <classpathentry kind="src" path="assets"/>
-  <classpathentry kind="src" path="assets"/>
-  <classpathentry kind="src" path="assets"/>
-  <classpathentry kind="src" path="assets"/>
-  <classpathentry kind="src" path="assets"/>
-  <classpathentry kind="src" path="assets"/>
-  <classpathentry kind="src" path="assets"/>
-  <classpathentry kind="src" path="assets"/>
 </classpath>

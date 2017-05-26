@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.tmc.clutterspace.core.utility.AssetLoader;
 
 public class Main extends Game {
 	SpriteBatch batch;
@@ -16,6 +17,9 @@ public class Main extends Game {
 
 	@Override
 	public void create () {
+		AssetLoader loader = AssetLoader.getInstance();
+		loader.assets.finishLoading();
+		
         cam = new OrthographicCamera(800, 600);
         viewport = new StretchViewport(800, 600, cam);
 	    batch = new SpriteBatch();
