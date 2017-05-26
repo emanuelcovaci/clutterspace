@@ -1,7 +1,7 @@
-package com.tmc.clutterspace.core.components.exceptions;
+package com.tmc.clutterspace.core.exceptions;
 
-import com.tmc.clutterspace.core.components.Component;
-import com.tmc.clutterspace.core.objects.GameObject;
+import com.tmc.clutterspace.core.engine.GameObject;
+import com.tmc.clutterspace.core.engine.components.Component;
 
 /**
  * Should be only thrown when trying to get an unexisting {@link Component} from a {@link GameObject}.

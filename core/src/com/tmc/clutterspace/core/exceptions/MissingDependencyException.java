@@ -1,6 +1,6 @@
-package com.tmc.clutterspace.core.components.exceptions;
+package com.tmc.clutterspace.core.exceptions;
 
-import com.tmc.clutterspace.core.components.Component;
+import com.tmc.clutterspace.core.engine.components.Component;
 
 /**
  * Should be thrown only when a {@link Component} is missing a {@link Component} that is dependent on.

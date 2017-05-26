@@ -1,9 +1,10 @@
-package com.tmc.clutterspace.core.components;
+package com.tmc.clutterspace.core.engine.components;
 
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.tmc.clutterspace.core.engine.State;
 
 /**
  * Wrapper coomponent for libgdx {@link Body}.
@@ -27,7 +28,7 @@ public class Body2D extends Component {
 	   * @param type The type of body that will be created.
 	   */
 	public Body2D(World w, BodyType type){
-		this.dependencies.add(Transform2D.class);
+		this.getDependencies().add(Transform2D.class);
 		
 		bodyDef = new BodyDef();
 	    bodyDef.type = BodyType.DynamicBody;
@@ -53,6 +54,23 @@ public class Body2D extends Component {
         body = world.createBody(bodyDef);
 	}
 
+	@Override
+	protected void prepareImpl() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void postUpdateImpl() {
+		gameObject.getComponent(Transform2D.class).p = body.getPosition();
+	}
+
+	@Override
+	protected void onGuiImpl() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	/**
 	 * Returns the libgdx {@link Body}. 
 	 * @return The physics body.
@@ -60,4 +78,11 @@ public class Body2D extends Component {
 	public Body getBody() {
 		return body;
 	}
+
+	@Override
+	public State getState() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

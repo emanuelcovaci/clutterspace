@@ -1,10 +1,13 @@
-package com.tmc.clutterspace.core.components;
+package com.tmc.clutterspace.core.engine.components;
 
 import java.util.ArrayList;
-import com.tmc.clutterspace.core.components.exceptions.MissingDependencyException;
-import com.tmc.clutterspace.core.components.exceptions.ComponentNotFoundException;
-import com.tmc.clutterspace.core.components.exceptions.LinkedComponentException;
-import com.tmc.clutterspace.core.objects.GameObject;
+import java.util.Collections;
+
+import com.tmc.clutterspace.core.engine.GameObject;
+import com.tmc.clutterspace.core.engine.State;
+import com.tmc.clutterspace.core.exceptions.ComponentNotFoundException;
+import com.tmc.clutterspace.core.exceptions.LinkedComponentException;
+import com.tmc.clutterspace.core.exceptions.MissingDependencyException;
 
 /**
  * Abstract base class used for components. It implements basic 
@@ -14,7 +17,7 @@ import com.tmc.clutterspace.core.objects.GameObject;
  */
 public abstract class Component {
 	protected GameObject gameObject;
-	protected ArrayList<Class<? extends Component>> dependencies;
+	private ArrayList<Class<? extends Component>> dependencies = new ArrayList<Class<? extends Component>>();
 	private boolean init = false;
 	
 	/**
@@ -41,7 +44,7 @@ public abstract class Component {
 	   * @throws MissingDependencyException (optional)
 	   */
 	private void forceCheckDependencies(){
-		for(Class<? extends Component> e : dependencies){
+		for(Class<? extends Component> e : getDependencies()){
 			if(!gameObject.hasComponent(e))
 				throw new MissingDependencyException(e);
 		}
@@ -52,7 +55,7 @@ public abstract class Component {
 	   * @return {@link true} if all components are satisfied, otherwise {@link false}.
 	   */
 	public boolean checkDependencies(){
-		for(Class<? extends Component> e : dependencies){
+		for(Class<? extends Component> e : getDependencies()){
 			if(!gameObject.hasComponent(e))
 				return false;	
 		}
@@ -80,6 +83,23 @@ public abstract class Component {
 	protected abstract void initImpl();
 	
 	/**
+	   * Wrapper function for {@link #prepareImpl()}.
+	   * <p>
+	   * Call this function to prepare the {@link Component}.
+	   */
+	public void prepare(){
+		if(!init) throw new RuntimeException();
+		forceCheckDependencies();
+		prepareImpl();
+	}
+	
+	/**
+	   * This function should be overridden to add the implementation 
+	   * of the {@link #prepare()}.
+	   */
+	protected abstract void prepareImpl();
+	
+	/**
 	   * Wrapper function for {@link #updateImpl(delta)}.
 	   * <p>
 	   * Call this function to update the {@link Component}.
@@ -99,6 +119,23 @@ public abstract class Component {
 	protected abstract void updateImpl(float delta);
 	
 	/**
+	   * Wrapper function for {@link #postUpdateImpl(delta)}.
+	   * <p>
+	   * Call this function to update the {@link Component} after physics.
+	   */
+	public void postUpdate(){
+		if(!init) throw new RuntimeException();
+		forceCheckDependencies();
+		postUpdateImpl();
+	}
+	
+	/**
+	   * This function should be overridden to add the implementation 
+	   * of the {@link #postUpdate(delta)}.
+	   */
+	protected abstract void postUpdateImpl();
+	
+	/**
 	   * Wrapper function for {@link #renderImpl()}.
 	   * <p>
 	   * Call this function to render the {@link Component}.
@@ -111,7 +148,34 @@ public abstract class Component {
 	
 	/**
 	   * This function should be overridden to add the implementation 
-	   * of the {@link #render(delta)}.
+	   * of the {@link #render()}.
 	   */
 	protected abstract void renderImpl();
+	
+	/**
+	   * Wrapper function for {@link #onGuiImpl()}.
+	   * <p>
+	   * Call this function to draw on gui for the {@link Component}.
+	   */
+	public void onGui(){
+		if(!init) throw new RuntimeException();
+		forceCheckDependencies();
+		onGuiImpl();
+	}
+	
+	/**
+	   * This function should be overridden to add the implementation 
+	   * of the {@link #onGui()}.
+	   */
+	protected abstract void onGuiImpl();
+
+	/**
+	 * Return all dependecies of this {@link Component}.
+	 * @return The dependencies.
+	 */
+	public ArrayList<Class<? extends Component>> getDependencies() {
+		return (ArrayList<Class<? extends Component>>) Collections.unmodifiableList(dependencies);
+	}
+	
+	public abstract State getState();
 }

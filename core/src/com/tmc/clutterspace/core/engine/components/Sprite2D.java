@@ -1,7 +1,8 @@
-package com.tmc.clutterspace.core.components;
+package com.tmc.clutterspace.core.engine.components;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.tmc.clutterspace.core.engine.State;
 import com.tmc.clutterspace.core.utility.AssetLoader;
 
 /**
@@ -39,6 +40,30 @@ public class Sprite2D extends Component {
 	protected void initImpl() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	protected void prepareImpl() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void onGuiImpl() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void postUpdateImpl() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public State getState() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

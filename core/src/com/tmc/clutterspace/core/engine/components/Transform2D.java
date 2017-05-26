@@ -1,6 +1,7 @@
-package com.tmc.clutterspace.core.components;
+package com.tmc.clutterspace.core.engine.components;
 
 import com.badlogic.gdx.math.Vector2;
+import com.tmc.clutterspace.core.engine.State;
 
 /**
  * Holds position and rotation used for rendering, pshysics etc.
@@ -44,6 +45,30 @@ public class Transform2D extends Component {
 	protected void initImpl() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	protected void prepareImpl() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void onGuiImpl() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void postUpdateImpl() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public State getState() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 

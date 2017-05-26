@@ -1,7 +1,7 @@
-package com.tmc.clutterspace.core.components.exceptions;
+package com.tmc.clutterspace.core.exceptions;
 
-import com.tmc.clutterspace.core.components.Component;
-import com.tmc.clutterspace.core.objects.GameObject;
+import com.tmc.clutterspace.core.engine.GameObject;
+import com.tmc.clutterspace.core.engine.components.Component;
 
 /**
  * Should be thrown when trying to add a {@link Component} which is already added to another {@link GameObject}.

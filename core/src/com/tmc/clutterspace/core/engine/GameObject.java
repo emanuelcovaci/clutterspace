@@ -1,10 +1,10 @@
-package com.tmc.clutterspace.core.objects;
+package com.tmc.clutterspace.core.engine;
 
 import com.google.common.collect.ClassToInstanceMap;
 import com.google.common.collect.MutableClassToInstanceMap;
-import com.tmc.clutterspace.core.components.Component;
-import com.tmc.clutterspace.core.components.exceptions.LinkedComponentException;
-import com.tmc.clutterspace.core.components.exceptions.ComponentNotFoundException;
+import com.tmc.clutterspace.core.engine.components.Component;
+import com.tmc.clutterspace.core.exceptions.ComponentNotFoundException;
+import com.tmc.clutterspace.core.exceptions.LinkedComponentException;
 
 /**
  * {@link GameObject} is a container used to store {@link Component}(s).
