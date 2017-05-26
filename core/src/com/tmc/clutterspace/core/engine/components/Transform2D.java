@@ -68,7 +68,9 @@ public class Transform2D extends Component {
 	@Override
 	public State getState() {
 		// TODO Auto-generated method stub
-		return null;
+		State s =  new State(this);
+		s.values.add(1);
+		return s;
 	}
 	
 

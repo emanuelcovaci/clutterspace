@@ -1,5 +1,11 @@
 package com.tmc.clutterspace.core.engine;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.UUID;
+
 import com.google.common.collect.ClassToInstanceMap;
 import com.google.common.collect.MutableClassToInstanceMap;
 import com.tmc.clutterspace.core.engine.components.Component;
@@ -16,15 +22,22 @@ import com.tmc.clutterspace.core.exceptions.LinkedComponentException;
  *
  */
 public class GameObject {
-	private ClassToInstanceMap<Component> components;
+	private ClassToInstanceMap<Component> components = MutableClassToInstanceMap.create();
+	private static int lastId = 0;
+	
+	/**
+	 * Identification id of this {@link GameObject}.
+	 */
+	public int id = GameObject.takeInEvidence();
 
 	/**
-	   * Contructor for a new {@link GameObject}.
-	   */
-	public GameObject(){
-		components = MutableClassToInstanceMap.create();
+	 * Give an unique id to the last created {@link GameObject}.
+	 * @return The last id.
+	 */
+	private static int takeInEvidence(){
+		return lastId++;
 	}
-
+	
 	/**
 	   * Adds/Sets a new {@link Component} for this {@link GameObject}.
 	   * @param <T> The type of the {@link Component} that will be added.
@@ -32,6 +45,7 @@ public class GameObject {
 	   * @throws LinkedComponentException (optional)
 	   */
 	public <T extends Component> void setComponent(T comp){
+		System.out.println(comp.getGameObject());
 		if(comp.getGameObject() != null)
 			throw new LinkedComponentException();
 		if(hasComponent(comp.getClass())){
@@ -87,4 +101,28 @@ public class GameObject {
 		}
 		return null;
 	}
+	
+	public byte[] serialize() throws IOException{
+		ArrayList<Integer> barr = new ArrayList<Integer>();
+		barr.add(id);
+		barr.add(components.size());
+
+		
+		for(Component c : components.values()){
+			ArrayList<Integer> a = c.getState().getContent();
+			if(a.isEmpty()) barr.set(1, barr.get(1) - 1);
+			else barr.addAll(c.getState().getContent());
+		}
+		
+		if(barr.get(1) == 0) return new byte[]{};
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		DataOutputStream out = new DataOutputStream(baos);
+		for(Integer val : barr)
+			out.write((int)val);
+		
+		return baos.toByteArray();
+	}
+	
+	
 }

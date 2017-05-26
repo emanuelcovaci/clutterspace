@@ -16,7 +16,7 @@ import com.tmc.clutterspace.core.exceptions.MissingDependencyException;
  *
  */
 public abstract class Component {
-	protected GameObject gameObject;
+	protected GameObject gameObject = null;
 	private ArrayList<Class<? extends Component>> dependencies = new ArrayList<Class<? extends Component>>();
 	private boolean init = false;
 	
@@ -33,8 +33,10 @@ public abstract class Component {
 	   * @throws LinkedComponentException (optional)
 	   */
 	public void setGameObject(GameObject gameObject) {
-		if(this.gameObject == null)
+		if(this.gameObject == null){
 			this.gameObject = gameObject;
+			return;
+		}
 		throw new LinkedComponentException();
 	}
 
@@ -177,5 +179,9 @@ public abstract class Component {
 		return (ArrayList<Class<? extends Component>>) Collections.unmodifiableList(dependencies);
 	}
 	
+	/**
+	 * Returns the {@link Component Component(s)} current {@link State}.
+	 * @return The current {@link State}.
+	 */
 	public abstract State getState();
 }

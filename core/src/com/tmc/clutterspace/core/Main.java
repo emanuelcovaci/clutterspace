@@ -1,5 +1,7 @@
 package com.tmc.clutterspace.core;
 
+import java.io.IOException;
+
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -7,7 +9,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.tmc.clutterspace.core.engine.GameObject;
 import com.tmc.clutterspace.core.engine.State;
+import com.tmc.clutterspace.core.engine.components.Transform2D;
 import com.tmc.clutterspace.core.utility.AssetLoader;
 
 public class Main extends Game {
@@ -20,9 +24,15 @@ public class Main extends Game {
 	public void create () {
 		AssetLoader loader = AssetLoader.getInstance();
 		loader.assets.finishLoading();
-		State s = new State();
-		s.values.put("pos", 2);
-		System.out.println(s.values.get("pos").getClass());
+		GameObject obj = new GameObject();
+		obj.setComponent(new Transform2D(new Vector2(2, 3)));
+		try {
+			System.out.println(obj.serialize().length);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
         cam = new OrthographicCamera(800, 600);
         viewport = new StretchViewport(800, 600, cam);
 	    batch = new SpriteBatch();
@@ -35,7 +45,6 @@ public class Main extends Game {
     }
 
 	public void render() {
-		System.out.println(vec);
 	    super.render();
 
 	}
