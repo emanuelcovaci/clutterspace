@@ -119,7 +119,7 @@ public class GameObject {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		DataOutputStream out = new DataOutputStream(baos);
 		for(Integer val : barr)
-			out.write((int)val);
+			out.writeInt(val);
 		
 		return baos.toByteArray();
 	}
