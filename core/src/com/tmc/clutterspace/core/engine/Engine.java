@@ -48,12 +48,11 @@ public class Engine {
 		rayHandler = new RayHandler(world);
 		batch = new SpriteBatch();
         cam = new OrthographicCamera(1920, 1080);
-        rayHandler.setCombinedMatrix(cam);
-        rayHandler.setShadows(false);
-        
         debugRenderer = new Box2DDebugRenderer();
         Viewport viewport = new StretchViewport(cam.viewportWidth, cam.viewportHeight, cam);
 		viewport.update((int)cam.viewportWidth, (int)cam.viewportHeight, true);
+        rayHandler.setCombinedMatrix(cam);
+        rayHandler.setShadows(false);
 	}
 	
 	public static Engine getInstance(){

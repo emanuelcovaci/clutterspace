@@ -140,13 +140,13 @@ public class FirstScreen implements Screen {
         en.addEntities(light);
 
         GameObject light2 = new GameObject();
-        light2.setComponent(new Light(500,100f,470,495));
+        light2.setComponent(new Light(500,1000f,470,495));
 
         light2.init();
         en.addEntities(light2);
 
         GameObject light3 = new GameObject();
-        light3.setComponent(new Light(500,100f,600,280));
+        light3.setComponent(new Light(500,1000f,600,280));
         
 
         light3.init();
