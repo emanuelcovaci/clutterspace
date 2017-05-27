@@ -40,7 +40,55 @@ public class FirstScreen implements Screen {
         en.step = 2/60f;
         
         en.getWorld().setGravity(new Vector2(0, -10));
+
+        GameObject background = new GameObject();
+        background.setComponent(new Transform2D(0, 0));
+        background.setComponent(new Body2D(BodyType.StaticBody));
+        background.setComponent(new Sprite2D("background01.png"));
+        background.getComponent(Sprite2D.class).size = new Vector2(en.getCamera().viewportWidth, en.getCamera().viewportHeight);
+
+
+
+
+        background.getComponent(Sprite2D.class).offset = new Vector2(0, 0);
+
+        background.init();
+        en.addEntities(background);
+        //        GameObject rock = new GameObject();
+//        rock.setComponent(new Transform2D(125,295));
+//        rock.setComponent(new Body2D( BodyType.StaticBody));
+//
+//        rock.init();
+//
+//        PolygonShape rockBox = new PolygonShape();
+//        rockBox.setAsBox(30, 5.0f);
+//        fixture = rock.getComponent(Body2D.class).getBody().createFixture(rockBox, 0.0f);
+//        fixture.setUserData(rock);
+//
+//        GameObject rock2 = new GameObject();
+//        rock2.setComponent(new Transform2D(470,495));
+//        rock2.setComponent(new Body2D( BodyType.StaticBody));
+//
+//        rock2.init();
+//
+//        PolygonShape rockBox2 = new PolygonShape();
+//        rockBox2.setAsBox(30, 5.0f);
+//        fixture = rock2.getComponent(Body2D.class).getBody().createFixture(rockBox2, 0.0f);
+//        fixture.setUserData(rock2);
+//
+//
+//        GameObject rock3 = new GameObject();
+//        rock3.setComponent(new Transform2D(600,280));
+//        rock3.setComponent(new Body2D(BodyType.StaticBody));
+//
+//        rock3.init();
+//
+//        PolygonShape rockBox3 = new PolygonShape();
+//        rockBox3.setAsBox(30, 5.0f);
+//        fixture = rock3.getComponent(Body2D.class).getBody().createFixture(rockBox3, 0.0f);
+//        fixture.setUserData(rock3);
         
+
         GameObject lion = new GameObject();
         lion.setComponent(new Transform2D(100, 300));
         lion.setComponent(new Body2D(BodyType.DynamicBody));
@@ -78,57 +126,13 @@ public class FirstScreen implements Screen {
         fixture = floor.getComponent(Body2D.class).getBody().createFixture(groundBox, 0.0f);
         fixture.setUserData(floor);
 
-        GameObject background = new GameObject();
-        background.setComponent(new Transform2D(0, 0));
-        background.setComponent(new Body2D(BodyType.StaticBody));
-        background.setComponent(new Sprite2D("background01.png"));
-        background.getComponent(Sprite2D.class).size = new Vector2(en.getCamera().viewportWidth, en.getCamera().viewportHeight);
 
-//        GameObject rock = new GameObject();
-//        rock.setComponent(new Transform2D(125,295));
-//        rock.setComponent(new Body2D( BodyType.StaticBody));
-//
-//        rock.init();
-//
-//        PolygonShape rockBox = new PolygonShape();
-//        rockBox.setAsBox(30, 5.0f);
-//        fixture = rock.getComponent(Body2D.class).getBody().createFixture(rockBox, 0.0f);
-//        fixture.setUserData(rock);
-//
-//        GameObject rock2 = new GameObject();
-//        rock2.setComponent(new Transform2D(470,495));
-//        rock2.setComponent(new Body2D( BodyType.StaticBody));
-//
-//        rock2.init();
-//
-//        PolygonShape rockBox2 = new PolygonShape();
-//        rockBox2.setAsBox(30, 5.0f);
-//        fixture = rock2.getComponent(Body2D.class).getBody().createFixture(rockBox2, 0.0f);
-//        fixture.setUserData(rock2);
-//
-//
-//        GameObject rock3 = new GameObject();
-//        rock3.setComponent(new Transform2D(600,280));
-//        rock3.setComponent(new Body2D(BodyType.StaticBody));
-//
-//        rock3.init();
-//
-//        PolygonShape rockBox3 = new PolygonShape();
-//        rockBox3.setAsBox(30, 5.0f);
-//        fixture = rock3.getComponent(Body2D.class).getBody().createFixture(rockBox3, 0.0f);
-//        fixture.setUserData(rock3);
-
-
-        background.getComponent(Sprite2D.class).offset = new Vector2(0, 0);
-
-        background.init();
-        en.addEntities(background);
 
         GameObject light = new GameObject();
         light.setComponent(new Transform2D(300, 531));
         light.setComponent(new Light(200f));
         light.getComponent(Light.class).getPointLight().setColor(255, 0, 0, 140);
-        
+
         light.init();
         en.addEntities(light);
 
