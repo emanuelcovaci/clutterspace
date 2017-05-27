@@ -27,22 +27,7 @@ public class Main extends Game {
 	public void create () {
 		AssetLoader loader = AssetLoader.getInstance();
 		loader.assets.finishLoading();
-<<<<<<< HEAD
-		State s = new State();
-		s.values.put("pos", 2);
-		State news = null;
-		byte[] ba = new byte[]{};
-		try {
-			ba = s.serialize();
-			news = State.deserialize(ba);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
 
-		System.out.println(news.equals(s));
-=======
 		GameObject obj = new GameObject();
 		obj.setComponent(new Transform2D(new Vector2(2, 3)));
 		try {
@@ -53,8 +38,7 @@ public class Main extends Game {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
->>>>>>> origin
+
         cam = new OrthographicCamera(800, 600);
         viewport = new StretchViewport(800, 600, cam);
 	    batch = new SpriteBatch();

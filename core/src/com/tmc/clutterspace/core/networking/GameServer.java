@@ -20,7 +20,7 @@ public class GameServer {
     }
 
     /**
-     * 
+     *
      * @param listen_address
      * @throws IOException
      */

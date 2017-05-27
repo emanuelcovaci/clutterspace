@@ -1,5 +1,7 @@
 package com.tmc.clutterspace.core.engine;
 
+import com.tmc.clutterspace.core.engine.components.Component;
+
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -7,12 +9,6 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-<<<<<<< HEAD
-public class State implements  Serializable{
-	public HashMap<String, Object> values = new HashMap<String, Object>();
-=======
-import com.tmc.clutterspace.core.engine.components.Component;
->>>>>>> origin
 
 public class State{
 	/**

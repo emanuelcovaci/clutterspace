@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="beae6ed7-edb9-44e3-b258-49af93aee116" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/Main.java" afterPath="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/engine/State.java" afterPath="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/engine/State.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameServer.java" afterPath="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameServer.java" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -50,14 +52,44 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameServer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GameServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameServer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="145">
-              <caret line="22" column="7" lean-forward="true" selection-start-line="22" selection-start-column="7" selection-end-line="22" selection-end-column="7" />
+              <caret line="22" column="6" lean-forward="true" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="State.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/engine/State.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="20">
+              <caret line="9" column="23" lean-forward="true" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="417">
+              <caret line="47" column="0" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FirstScreen.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/FirstScreen.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="140">
+              <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -813,12 +845,12 @@
       <list>
         <option value="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/components/Sprite2D.java" />
         <option value="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/utility/Serialize.java" />
-        <option value="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/engine/State.java" />
-        <option value="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/Main.java" />
         <option value="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/ClientHandler.java" />
         <option value="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameClient.java" />
         <option value="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameRoom.java" />
         <option value="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameServer.java" />
+        <option value="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/engine/State.java" />
+        <option value="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/Main.java" />
       </list>
     </option>
   </component>
@@ -1357,32 +1389,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="32" column="32" lean-forward="true" selection-start-line="32" selection-start-column="32" selection-end-line="32" selection-end-column="32" />
-          <folding>
-            <marker date="1495820887260" expanded="false" signature="1311:1321" ph=" { " />
-            <marker date="1495820887260" expanded="false" signature="1349:1355" ph=" }" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/desktop/src/com/tmc/clutterspace/java/MainDesktop.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/engine/State.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" column="43" lean-forward="false" selection-start-line="5" selection-start-column="43" selection-end-line="5" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1417,10 +1428,34 @@
     <entry file="file://$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameServer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="145">
-          <caret line="22" column="7" lean-forward="true" selection-start-line="22" selection-start-column="7" selection-end-line="22" selection-end-column="7" />
+          <caret line="22" column="6" lean-forward="true" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/engine/State.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="9" column="23" lean-forward="true" selection-start-line="9" selection-start-column="23" selection-end-line="9" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="47" column="0" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/FirstScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
