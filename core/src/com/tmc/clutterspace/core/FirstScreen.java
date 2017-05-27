@@ -38,7 +38,7 @@ public class FirstScreen implements Screen {
     private Music music_level1;
     Vector2 vec = new Vector2(0,0);
     World w;
-    GameObject lion, floor,background,light,light2,light3,rock,rock2,rock3,groundRock;
+    GameObject lion, floor,background,light,light2,light3,rock,rock2,rock3,groundRock,health;
     Box2DDebugRenderer debugRenderer;
     RayHandler rayHandler;
 
@@ -51,8 +51,7 @@ public class FirstScreen implements Screen {
         lion = new GameObject();
         lion.setComponent(new Transform2D(100, 300));
         lion.setComponent(new Body2D(w, BodyType.DynamicBody));
-        
-        
+        lion.setComponent(new Health());
         lion.setComponent(new Sprite2D("lion.png"));
         lion.getComponent(Sprite2D.class).size = new Vector2(100, 100);
         lion.getComponent(Sprite2D.class).offset = new Vector2(-50, -50);
