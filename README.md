@@ -1,3 +1,3 @@
 # clutterspace
-The next big game in the world
-HackTM 2017
+# The next big game in the world
+# HackTM 2017
