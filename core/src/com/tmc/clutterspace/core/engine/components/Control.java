@@ -47,7 +47,7 @@ public class Control extends  Component{
             comp.getBody().applyLinearImpulse(0,-0.80f* 1000, trans.p.x, trans.p.y,true);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.R)){
-            comp.getBody().setTransform(50,120,50);
+            comp.getBody().setTransform(50,50,50);
 
         }
     }

@@ -28,7 +28,10 @@ public class AssetLoader {
 	protected AssetLoader() {
 		FileHandleResolver resolver = new InternalFileHandleResolver();
 		assets = new AssetManager(resolver);
+		
 		load("background.jpg", Texture.class);
+		load("background01.png", Texture.class);
+		load("heartbeat.png", Texture.class);
 		load("lion.png", Texture.class);
 		load("pidgey.png", Texture.class);
 		load("background.mp3", Music.class);
