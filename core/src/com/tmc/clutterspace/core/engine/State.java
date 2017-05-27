@@ -3,7 +3,7 @@ package com.tmc.clutterspace.core.engine;
 import java.io.*;
 import java.util.HashMap;
 
-public class State {
+public class State implements  Serializable{
 	public HashMap<String, Object> values = new HashMap<String, Object>();
 
 	public byte [] serialize() throws IOException {

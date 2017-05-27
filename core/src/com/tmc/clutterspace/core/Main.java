@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tmc.clutterspace.core.engine.State;
 import com.tmc.clutterspace.core.utility.AssetLoader;
 
+import java.io.IOException;
+
 public class Main extends Game {
 	SpriteBatch batch;
     OrthographicCamera cam;
@@ -22,7 +24,18 @@ public class Main extends Game {
 		loader.assets.finishLoading();
 		State s = new State();
 		s.values.put("pos", 2);
-		System.out.println(s.values.get("pos").getClass());
+		State news = null;
+		byte[] ba = new byte[]{};
+		try {
+			ba = s.serialize();
+			news = State.deserialize(ba);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println(news.equals(s));
         cam = new OrthographicCamera(800, 600);
         viewport = new StretchViewport(800, 600, cam);
 	    batch = new SpriteBatch();
