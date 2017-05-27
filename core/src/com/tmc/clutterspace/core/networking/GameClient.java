@@ -14,7 +14,7 @@ import com.tmc.clutterspace.core.engine.State;
  */
 public class GameClient {
 
-    private static final int MAX_BUFF = 1024;
+    private static final int MAX_BUFF = 1000000;
     private DatagramChannel client_channel;
     public static InetSocketAddress server_address;
 
@@ -25,19 +25,25 @@ public class GameClient {
         client_channel = DatagramChannel.open();
         client_channel.bind(null);
         server_address = new InetSocketAddress("10.1.0.68",8080);
+        String playername = "Rares";
+        while(true){
+            send_data(playername.getBytes());
+            System.out.println("Player just recieved" + recieve_data().length + "bytes");
+        }
     }
 
-    public void send_data(GameObject obj) throws IOException{
+    public void send_data(byte [] plobj) throws IOException{
             ByteBuffer plbuff_out = ByteBuffer.allocate(MAX_BUFF);
             plbuff_out.clear();
-
+            plbuff_out.put(plbuff_out);
+            client_channel.send(plbuff_out,server_address);
     }
 
-    public ArrayList<State> recieve_data()throws IOException{
+    public byte [] recieve_data()throws IOException{
             ByteBuffer plbuff_in  = ByteBuffer.allocate(MAX_BUFF);
             plbuff_in.clear();
             client_channel.receive(plbuff_in);
-            return (ArrayList<State>)State.deserialize(plbuff_in.array());
+            return plbuff_in.array();
 
     }
 }

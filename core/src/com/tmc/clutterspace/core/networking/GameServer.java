@@ -15,7 +15,7 @@ public class GameServer {
 
     HashMap<SocketAddress, ClientHandler> connected_players;
     private DatagramChannel server_channel;
-    private static final int MAX_SIZE = 1024;
+    private static final int MAX_SIZE = 1000000;
     public static void main(String[] args) throws IOException{
         new GameServer(new InetSocketAddress("10.1.0.68",8080));
     }
@@ -46,20 +46,38 @@ public class GameServer {
     public void start_game() throws IOException{
         boolean running = true;
         ByteBuffer player_buff = ByteBuffer.allocate(MAX_SIZE);
-        while(running){
+        System.out.println("Game server just started listen for player data");
+        Runnable start = () -> {
             player_buff.clear();
-            this.server_channel.receive(player_buff);
-            if(connected_players.isEmpty()){
-                running = false;
-            }else{
+            try {
+                this.server_channel.receive(player_buff);
                 for(SocketAddress player_addr: connected_players.keySet()){
                     player_buff.flip();
                     this.server_channel.send(player_buff,player_addr);
                     player_buff.clear();
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
-        }
+        };
+
+        Thread t = new Thread(start);
+        t.start();
+//        while(running){
+//            player_buff.clear();
+//            this.server_channel.receive(player_buff);
+//            if(connected_players.isEmpty()){
+//                running = false;
+//            }else{
+//                for(SocketAddress player_addr: connected_players.keySet()){
+//                    player_buff.flip();
+//                    this.server_channel.send(player_buff,player_addr);
+//                    player_buff.clear();
+//                }
+//            }
+//
+//        }
     }
 
     /**

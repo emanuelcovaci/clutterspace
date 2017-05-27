@@ -15,7 +15,7 @@ import com.tmc.clutterspace.core.engine.GameObject;
  */
 public class GameRoom {
 
-    private static final int MAX_BYTES = 1024;
+    private static final int MAX_BYTES = 1000000;
     private static final int MAX_PLAYERS = 6;
     private DatagramChannel server_ch;
     private boolean not_ready = true;
@@ -41,7 +41,7 @@ public class GameRoom {
             }
             if(connpl.size() == MAX_PLAYERS){
                 not_ready = false;
-                get_ready();
+                //get_ready();
             }
 
         }
@@ -74,9 +74,12 @@ public class GameRoom {
                 get_ready.put(ready_state.getBytes());
                 get_ready.flip();
                 server_ch.send(get_ready, ready_player);
-            }else{
-                get_player(connpl,ready_player).is_ready = true;
-            }
+            }else
+                try{
+                    get_player(connpl,ready_player).is_ready = true;
+                }catch(NullPointerException e){
+                    e.printStackTrace();
+                }
 
         }
     }
