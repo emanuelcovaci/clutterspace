@@ -26,6 +26,7 @@ public class AssetLoader {
 		assets = new AssetManager(resolver);
 		assets.load("background.jpg", Texture.class);
 		assets.load("background01.png", Texture.class);
+		assets.load("heartbeat.png", Texture.class);
 		assets.load("lion.png", Texture.class);
 		assets.load("pidgey.png", Texture.class);
 		assets.load("background.mp3", Music.class);

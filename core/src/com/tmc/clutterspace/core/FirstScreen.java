@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -42,11 +43,13 @@ public class FirstScreen implements Screen {
     Box2DDebugRenderer debugRenderer;
     RayHandler rayHandler;
 
+
     public  FirstScreen(final Main game){
 
         this.game = game;
         
         w = new World(new Vector2(0, -100), true);
+
         
         lion = new GameObject();
         lion.setComponent(new Transform2D(100, 300));
@@ -172,7 +175,6 @@ public class FirstScreen implements Screen {
 
         game.batch.setProjectionMatrix(game.cam.combined);
         game.batch.begin();
-
 
 
         background.render(game.batch);

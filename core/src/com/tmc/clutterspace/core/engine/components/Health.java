@@ -1,6 +1,11 @@
 package com.tmc.clutterspace.core.engine.components;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.World;
+import com.tmc.clutterspace.core.engine.GameObject;
 import com.tmc.clutterspace.core.engine.State;
 
 /**
@@ -12,9 +17,13 @@ public class Health extends Component {
         register(Health.class);
     }
     private Integer health;
+    BitmapFont font ;
+    GameObject iconHearth;
 
     public Health(){
         health = 100;
+        this.getDependencies().add(Transform2D.class);
+
     }
 
     public int getHealth(){
@@ -47,6 +56,12 @@ public class Health extends Component {
 
     @Override
     protected void renderImpl(SpriteBatch batch) {
+
+        font = new BitmapFont();
+
+        String x = Integer.toString(getHealth());
+
+        font.draw(batch,x, 700, 580);
 
     }
 
