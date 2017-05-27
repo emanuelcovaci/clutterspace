@@ -24,10 +24,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.tmc.clutterspace.core.engine.GameObject;
-import com.tmc.clutterspace.core.engine.components.Body2D;
-import com.tmc.clutterspace.core.engine.components.Control;
-import com.tmc.clutterspace.core.engine.components.Sprite2D;
-import com.tmc.clutterspace.core.engine.components.Transform2D;
+import com.tmc.clutterspace.core.engine.components.*;
 import com.tmc.clutterspace.core.utility.AssetLoader;
 
 /**
@@ -41,7 +38,7 @@ public class FirstScreen implements Screen {
     private Music music_level1;
     Vector2 vec = new Vector2(0,0);
     World w;
-    GameObject lion, floor,background;
+    GameObject lion, floor,background,light;
     Box2DDebugRenderer debugRenderer;
     RayHandler rayHandler;
 
@@ -99,9 +96,18 @@ public class FirstScreen implements Screen {
         rayHandler = new RayHandler(w);
         rayHandler.setCombinedMatrix(game.cam);
         rayHandler.setShadows(false);
-        new PointLight(rayHandler,5000,Color.CYAN,1000,700,500);
-     
-        
+//        new PointLight(rayHandler,5000,Color.CYAN,1000,700,500);
+
+        light = new GameObject();
+        light.setComponent(new Light(rayHandler,500,1000f,700,500));
+
+
+
+
+
+
+
+
 
         debugRenderer = new Box2DDebugRenderer();
 
@@ -135,13 +141,10 @@ public class FirstScreen implements Screen {
     	floor.render(game.batch);
 
 
-
-        
-
         game.batch.end();
         rayHandler.updateAndRender();
 
-//        debugRenderer.render(w, game.cam.combined);
+        debugRenderer.render(w, game.cam.combined);
     }
 
     @Override
