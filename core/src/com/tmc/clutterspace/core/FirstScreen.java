@@ -73,7 +73,7 @@ public class FirstScreen implements Screen {
         fixture.setUserData(lion);
         
         floor = new GameObject();
-        floor.setComponent(new Transform2D(0, 90));
+        floor.setComponent(new Transform2D(0, 0));
         floor.setComponent(new Body2D(w, BodyType.StaticBody));
         
         floor.init();
@@ -87,7 +87,7 @@ public class FirstScreen implements Screen {
         background = new GameObject();
         background.setComponent(new Transform2D(0, 0));
         background.setComponent(new Body2D(w, BodyType.StaticBody));
-        background.setComponent(new Sprite2D("background.jpg"));
+        background.setComponent(new Sprite2D("background01.png"));
         background.getComponent(Sprite2D.class).size = new Vector2(800, 600);
         background.getComponent(Sprite2D.class).offset = new Vector2(0, 0);
 
