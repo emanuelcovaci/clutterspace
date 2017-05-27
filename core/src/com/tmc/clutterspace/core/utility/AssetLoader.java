@@ -5,6 +5,8 @@ import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 
 
 /**
@@ -17,6 +19,8 @@ import com.badlogic.gdx.graphics.Texture;
 public class AssetLoader {
 	private static AssetLoader instance = null;
 	public AssetManager assets;
+	public static BiMap<String, Integer> Dictionary = HashBiMap.create();
+	private int lastId = 0;
 	
 	/**
 	 * Internal contructor for singleton.
@@ -24,10 +28,10 @@ public class AssetLoader {
 	protected AssetLoader() {
 		FileHandleResolver resolver = new InternalFileHandleResolver();
 		assets = new AssetManager(resolver);
-		assets.load("background.jpg", Texture.class);
-		assets.load("lion.png", Texture.class);
-		assets.load("pidgey.png", Texture.class);
-		assets.load("background.mp3", Music.class);
+		load("background.jpg", Texture.class);
+		load("lion.png", Texture.class);
+		load("pidgey.png", Texture.class);
+		load("background.mp3", Music.class);
    	}
 	
 	/**
@@ -48,5 +52,11 @@ public class AssetLoader {
 	 */
    	public static <T> T get(String name, Class<T> clazz){
    		return getInstance().assets.get(name, clazz);
+   	}
+   	
+   	private <T> void load(String name, Class<T> clazz){
+   		Dictionary.put(name, lastId);
+   		lastId++;
+		assets.load(name, clazz);
    	}
 }

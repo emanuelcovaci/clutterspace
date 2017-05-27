@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.tmc.clutterspace.core.engine.Engine;
 import com.tmc.clutterspace.core.engine.GameObject;
 import com.tmc.clutterspace.core.engine.State;
 import com.tmc.clutterspace.core.exceptions.ComponentNotFoundException;
@@ -23,6 +24,8 @@ import com.tmc.clutterspace.core.exceptions.MissingDependencyException;
 public abstract class Component {
 	public static BiMap<Class<? extends Component>, Integer> Dictionary = HashBiMap.create();
 	protected static int lastId = 0;
+	protected long disposeTime = -1;
+	
 	
 	static {
 		register(Component.class);
@@ -31,6 +34,18 @@ public abstract class Component {
 	protected GameObject gameObject = null;
 	private ArrayList<Class<? extends Component>> dependencies = new ArrayList<Class<? extends Component>>();
 	private boolean init = false;
+
+	protected Component(){
+		
+	}
+	
+	public boolean isDisposed(){
+		return disposeTime != -1 && Engine.getInstance().getTime() > disposeTime; 
+	}
+	
+	public void setDisposed(long time){
+		disposeTime = time;
+	}
 	
 	/**
 	 * Registers a new {@link Component}.
@@ -92,6 +107,7 @@ public abstract class Component {
 	   * constructor initializationof the {@link Component}.
 	   */
 	public void init(){
+		if(isDisposed()) return;
 		if(!init) {
 			init = true;
 			forceCheckDependencies();
@@ -111,6 +127,7 @@ public abstract class Component {
 	   * Call this function to prepare the {@link Component}.
 	   */
 	public void prepare(){
+		if(isDisposed()) return;
 		if(!init) throw new RuntimeException();
 		forceCheckDependencies();
 		prepareImpl();
@@ -129,6 +146,7 @@ public abstract class Component {
 	   * @param delta The ammount of time that is simulated.
 	   */
 	public void update(float delta){
+		if(isDisposed()) return;
 		if(!init) throw new RuntimeException();
 		forceCheckDependencies();
 		updateImpl(delta);
@@ -147,6 +165,7 @@ public abstract class Component {
 	   * Call this function to update the {@link Component} after physics.
 	   */
 	public void postUpdate(){
+		if(isDisposed()) return;
 		if(!init) throw new RuntimeException();
 		forceCheckDependencies();
 		postUpdateImpl();
@@ -165,6 +184,7 @@ public abstract class Component {
 	   * @param batch The render batch.
 	   */
 	public void render(SpriteBatch batch){
+		if(isDisposed()) return;
 		if(!init) throw new RuntimeException();
 		forceCheckDependencies();
 		renderImpl(batch);
@@ -184,6 +204,7 @@ public abstract class Component {
 	   * @param batch The render batch.
 	   */
 	public void onGui(SpriteBatch batch){
+		if(isDisposed()) return;
 		if(!init) throw new RuntimeException();
 		forceCheckDependencies();
 		onGuiImpl(batch);
@@ -209,4 +230,15 @@ public abstract class Component {
 	 * @return The current {@link State}.
 	 */
 	public abstract State getState();
+	
+	public static Component fromState(State s) {
+		return null;
+	}
+	
+	public Component interpolate(Component other, float perc){
+		if(isDisposed()) return null;
+		return interpolateImpl(other, perc);
+	}
+	
+	public abstract Component interpolateImpl(Component other, float perc);
 }

@@ -1,5 +1,7 @@
 package com.tmc.clutterspace.core.engine.components;
 
+import java.nio.ByteBuffer;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,6 +22,7 @@ public class Sprite2D extends Component {
 	}
 	
 	public Texture tex;
+	private String texName;
 	private boolean rotate = false;
 	public Vector2 offset = new Vector2(0, 0); 
 	public Vector2 size = new Vector2(100, 100);
@@ -31,6 +34,7 @@ public class Sprite2D extends Component {
 	public Sprite2D(String name){
 		this.getDependencies().add(Transform2D.class);
 		tex = AssetLoader.get(name, Texture.class);
+		texName = name;
 	}
 	
 	@Override
@@ -71,8 +75,31 @@ public class Sprite2D extends Component {
 
 	@Override
 	public State getState() {
-		// TODO Auto-generated method stub
-		return null;
+		ByteBuffer buf = ByteBuffer.allocate(8 * 4);
+		State s =  new State(this);
+		buf.putInt(AssetLoader.Dictionary.get(texName));
+		buf.put((byte) (rotate ? 1 : 0));
+		buf.putFloat(offset.x);
+		buf.putFloat(offset.y);
+		buf.putFloat(size.x);
+		buf.putFloat(size.y);
+		buf.put((byte) (flippedX ? 1 : 0));
+		buf.put((byte) (flippedY ? 1 : 0));
+		s.values = buf.array();
+		
+		return s;
+	}
+	
+	
+	public static Component fromState(State state) {
+		ByteBuffer buf = ByteBuffer.wrap(state.values);
+		Sprite2D comp = new Sprite2D(AssetLoader.Dictionary.inverse().get(buf.getInt()));
+		comp.rotate = buf.get() == 1 ? true : false;
+		comp.offset = new Vector2(buf.getFloat(), buf.getFloat());
+		comp.size = new Vector2(buf.getFloat(), buf.getFloat());
+		comp.flippedX = buf.get() == 1 ? true : false;
+		comp.flippedY = buf.get() == 1 ? true : false;
+		return comp;
 	}
 
 	/**
@@ -148,4 +175,8 @@ public class Sprite2D extends Component {
 		this.flippedY = flipped;
 	}
 
+	@Override
+	public Component interpolateImpl(Component other, float perc) {
+		return other;
+	}
 }

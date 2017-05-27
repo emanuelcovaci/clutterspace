@@ -15,7 +15,7 @@ import com.tmc.clutterspace.core.engine.State;
  * @author roadd
  *
  */
-public class Transform2D extends Component {
+public class Transform2D extends Component{
 	static{
 		register(Transform2D.class);
 	}
@@ -46,7 +46,6 @@ public class Transform2D extends Component {
 	public Transform2D(float x, float y) {
 		this.p = new Vector2(x, y);
 	} 
-
 
 	@Override
 	protected void updateImpl(float delta) {
@@ -96,5 +95,19 @@ public class Transform2D extends Component {
 		return s;
 	}
 	
+	public static Component fromState(State s){
+		ByteBuffer buf = ByteBuffer.wrap(s.values);
+		Transform2D comp = new Transform2D(buf.getFloat(), buf.getFloat());
+		comp.a = buf.getFloat();
+		return comp;
+	}
 
+	@Override
+	public Component interpolateImpl(Component other, float perc) {
+		// TODO Auto-generated method stub
+		Transform2D oth = (Transform2D) other;
+		Transform2D ret = new Transform2D(this.p.x * (1 - perc) + oth.p.x * perc, this.p.y * (1 - perc) + oth.p.y * perc);
+		ret.a = this.a * (1 - perc) + oth.a * perc;
+		return ret;
+	}
 }

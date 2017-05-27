@@ -15,6 +15,7 @@ public class Control extends  Component{
 
     public Control(){
         getDependencies().add(Body2D.class);
+        getDependencies().add(Transform2D.class);
     }
 
 
@@ -31,18 +32,19 @@ public class Control extends  Component{
     @Override
     protected void updateImpl(float delta) {
         Body2D comp = getGameObject().getComponent(Body2D.class);
+        Transform2D trans = getGameObject().getComponent(Transform2D.class);
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            comp.getBody().applyForceToCenter(-1000000,0,true);
+            comp.getBody().applyLinearImpulse(-0.80f * 1000,0, trans.p.x, trans.p.y,true);
 
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            comp.getBody().applyForceToCenter(1000000, 0, true);
+            comp.getBody().applyLinearImpulse(0.80f* 1000, 0, trans.p.x, trans.p.y, true);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            comp.getBody().applyForceToCenter(0,1000000,true);
+            comp.getBody().applyLinearImpulse(0,0.80f* 1000, trans.p.x, trans.p.y,true);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            comp.getBody().applyForceToCenter(0,-10000000,true);
+            comp.getBody().applyLinearImpulse(0,-0.80f* 1000, trans.p.x, trans.p.y,true);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.R)){
             comp.getBody().setTransform(50,120,50);
@@ -69,4 +71,11 @@ public class Control extends  Component{
     public State getState() {
         return null;
     }
+
+
+	@Override
+	public Component interpolateImpl(Component other, float perc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

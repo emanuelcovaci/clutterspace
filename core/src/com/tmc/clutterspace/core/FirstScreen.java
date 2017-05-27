@@ -2,6 +2,9 @@ package com.tmc.clutterspace.core;
 
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
+
+import java.io.IOException;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -23,8 +26,10 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.tmc.clutterspace.core.engine.Engine;
 import com.tmc.clutterspace.core.engine.GameObject;
 import com.tmc.clutterspace.core.engine.components.Body2D;
+import com.tmc.clutterspace.core.engine.components.Component;
 import com.tmc.clutterspace.core.engine.components.Control;
 import com.tmc.clutterspace.core.engine.components.Sprite2D;
 import com.tmc.clutterspace.core.engine.components.Transform2D;
@@ -35,25 +40,25 @@ import com.tmc.clutterspace.core.utility.AssetLoader;
  */
 public class FirstScreen implements Screen {
     final Main game;
-
+    Engine en;
 
 
     private Music music_level1;
     Vector2 vec = new Vector2(0,0);
-    World w;
-    GameObject lion, floor,background;
-    Box2DDebugRenderer debugRenderer;
-    RayHandler rayHandler;
 
     public  FirstScreen(final Main game){
 
         this.game = game;
         
-        w = new World(new Vector2(0, -100), true);
+        en = Engine.getInstance();
+        en.debug = true;
+        en.step = 2/60f;
         
-        lion = new GameObject();
+        en.getWorld().setGravity(new Vector2(0, -10));
+        
+        GameObject lion = new GameObject();
         lion.setComponent(new Transform2D(100, 300));
-        lion.setComponent(new Body2D(w, BodyType.DynamicBody));
+        lion.setComponent(new Body2D(BodyType.DynamicBody));
         
         
         lion.setComponent(new Sprite2D("lion.png"));
@@ -63,85 +68,63 @@ public class FirstScreen implements Screen {
         lion.setComponent(new Control());
 
         lion.init();
-        
+        en.addEntities(lion);
 
         CircleShape circle = new CircleShape();
         circle.setRadius(50f);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = circle;
-        fixtureDef.density = 0.5f;
-        fixtureDef.friction = 0.01f;
+        fixtureDef.density = 2f;
+        fixtureDef.friction = 1f;
         fixtureDef.restitution = 0.6f;
         Fixture fixture = lion.getComponent(Body2D.class).getBody().createFixture(fixtureDef);
         fixture.setUserData(lion);
         
-        floor = new GameObject();
+        GameObject floor = new GameObject();
         floor.setComponent(new Transform2D(0, 90));
-        floor.setComponent(new Body2D(w, BodyType.StaticBody));
-        
+        floor.setComponent(new Body2D(BodyType.StaticBody));
+
         floor.init();
+        en.addEntities(floor);
         
 
         PolygonShape groundBox = new PolygonShape();
-        groundBox.setAsBox(game.cam.viewportWidth, 10.0f);
+        groundBox.setAsBox(en.getCamera().viewportWidth, 10.0f);
         fixture = floor.getComponent(Body2D.class).getBody().createFixture(groundBox, 0.0f);
         fixture.setUserData(floor);
 
-        background = new GameObject();
+        GameObject background = new GameObject();
         background.setComponent(new Transform2D(0, 0));
-        background.setComponent(new Body2D(w, BodyType.StaticBody));
+        background.setComponent(new Body2D(BodyType.StaticBody));
         background.setComponent(new Sprite2D("background.jpg"));
-        background.getComponent(Sprite2D.class).size = new Vector2(800, 600);
+        background.getComponent(Sprite2D.class).size = new Vector2(en.getCamera().viewportWidth, en.getCamera().viewportHeight);
         background.getComponent(Sprite2D.class).offset = new Vector2(0, 0);
 
         background.init();
+        en.addEntities(background);
 
-        rayHandler = new RayHandler(w);
-        rayHandler.setCombinedMatrix(game.cam);
-        rayHandler.setShadows(false);
-        new PointLight(rayHandler,5000,Color.CYAN,1000,700,500);
-     
-        
-
-        debugRenderer = new Box2DDebugRenderer();
-
+        new PointLight(en.getRayHandler(),5000,Color.CYAN,1000,700,500);
 
         music_level1 = AssetLoader.get("background.mp3", Music.class);
+
+		System.out.println(Component.Dictionary);
+        try {
+			System.out.println(en.decodeSnapshots(en.createSnapshot()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     @Override
     public void render(float v) {
-        background.prepare();
-    	lion.prepare();
-    	floor.prepare();
-    	lion.update(5/60f);
-    	floor.update(5/60f);
-    	lion.postUpdate();
-    	floor.postUpdate();
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+    	
+    	while(v > 0){
+    		en.update();
+    		v -= en.step / 5;
+    	}
+    	en.render();
         music_level1.setLooping(true);
         music_level1.play();
-        w.step(5/60f, 6, 2);
-
-        game.batch.setProjectionMatrix(game.cam.combined);
-        game.batch.begin();
-
-
-
-        background.render(game.batch);
-        lion.render(game.batch);
-    	floor.render(game.batch);
-        lion.onGui(game.batch);
-    	floor.render(game.batch);
-
-
-
-        
-
-        game.batch.end();
-        rayHandler.updateAndRender();
-
-//        debugRenderer.render(w, game.cam.combined);
     }
 
     @Override
