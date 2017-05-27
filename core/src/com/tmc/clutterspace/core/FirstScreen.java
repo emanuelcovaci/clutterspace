@@ -87,7 +87,7 @@ public class FirstScreen implements Screen {
 //        rockBox3.setAsBox(30, 5.0f);
 //        fixture = rock3.getComponent(Body2D.class).getBody().createFixture(rockBox3, 0.0f);
 //        fixture.setUserData(rock3);
-        
+
 
         GameObject lion = new GameObject();
         lion.setComponent(new Transform2D(100, 300));
