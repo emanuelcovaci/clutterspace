@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.google.common.collect.ClassToInstanceMap;
 import com.google.common.collect.MutableClassToInstanceMap;
 import com.tmc.clutterspace.core.engine.components.Component;
@@ -106,7 +107,12 @@ public class GameObject {
 		return null;
 	}
 	
-	public byte[] serialize() throws IOException{
+	/**
+	 * Serializes the render {@link State State(s)} of the {@link GameObject}.
+	 * @return The serialized form(byte array).
+	 * @throws IOException
+	 */
+	public byte[] serializeRenderStates() throws IOException{
 		ArrayList<Integer> barr = new ArrayList<Integer>();
 		barr.add(id);
 		barr.add(components.size());
@@ -128,7 +134,12 @@ public class GameObject {
 		return baos.toByteArray();
 	}
 	
-	public static ArrayList<State> deserialize(byte[] barr){
+	/**
+	 * Deserializes the render {@link State State(s)} of the {@link GameObject}. 
+	 * @param barr The serialized {@link GameObject}.
+	 * @return An {@link ArrayList} containing all the render {@link State State(s)}. 
+	 */
+	public static ArrayList<State> deserializeRenderStates(byte[] barr){
 		ArrayList<State> states = new ArrayList<State>();
 		IntBuffer intBuf = ByteBuffer.wrap(barr)
 				     				 .order(ByteOrder.BIG_ENDIAN)
@@ -149,5 +160,33 @@ public class GameObject {
 		return states;
 	}
 	
+	public void init(){
+		for(Component c : components.values())
+			c.init();
+	}
 	
+	public void prepare(){
+		for(Component c : components.values())
+			c.prepare();
+	}
+	
+	public void update(float delta){
+		for(Component c : components.values())
+			c.update(delta);
+	}
+	
+	public void postUpdate(){
+		for(Component c : components.values())
+			c.postUpdate();
+	}
+	
+	public void render(SpriteBatch batch){
+		for(Component c : components.values())
+			c.render(batch);
+	}
+	
+	public void onGui(SpriteBatch batch){
+		for(Component c : components.values())
+			c.onGui(batch);
+	}
 }

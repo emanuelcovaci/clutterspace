@@ -25,9 +25,8 @@ public class State{
 	 * @param component The {@link Component} of which state we create.
 	 */
 	public State(Component component){
-//		typeId = component;
+		typeId = Component.Dictionary.get(component.getClass());
 	}
-	
 	
 	/**
 	 * Empty contructor.

@@ -1,6 +1,7 @@
 package com.tmc.clutterspace.core.engine.components;
 
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
@@ -16,10 +17,13 @@ import com.tmc.clutterspace.core.engine.State;
  *
  */
 public class Body2D extends Component {
+	static{
+		register(Body2D.class);
+	}
+	
 	private final BodyDef bodyDef;
 	private Body body = null;
 	private final World world;
-	
 	/**
 	   * Constructor for the {@link Body2D} component.
 	   * <p>
@@ -31,7 +35,7 @@ public class Body2D extends Component {
 		this.getDependencies().add(Transform2D.class);
 		
 		bodyDef = new BodyDef();
-	    bodyDef.type = BodyType.DynamicBody;
+	    bodyDef.type = type;
 	    world = w;
 	}
 	
@@ -42,7 +46,7 @@ public class Body2D extends Component {
 	}
 
 	@Override
-	protected void renderImpl() {
+	protected void renderImpl(SpriteBatch batch) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -63,10 +67,11 @@ public class Body2D extends Component {
 	@Override
 	protected void postUpdateImpl() {
 		gameObject.getComponent(Transform2D.class).p = body.getPosition();
+		gameObject.getComponent(Transform2D.class).a = body.getAngle();
 	}
 
 	@Override
-	protected void onGuiImpl() {
+	protected void onGuiImpl(SpriteBatch batch) {
 		// TODO Auto-generated method stub
 		
 	}
