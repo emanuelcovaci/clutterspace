@@ -41,30 +41,7 @@ public class FirstScreen implements Screen {
         
         en.getWorld().setGravity(new Vector2(0, -10));
         
-        GameObject lion = new GameObject();
-        lion.setComponent(new Transform2D(100, 300));
-        lion.setComponent(new Body2D(BodyType.DynamicBody));
-        lion.setComponent(new Health());
-        lion.setComponent(new Sprite2D("lion.png"));
-        lion.getComponent(Sprite2D.class).size = new Vector2(100, 100);
-        lion.getComponent(Sprite2D.class).offset = new Vector2(-50, -50);
-
-        lion.setComponent(new Control());
-
-        lion.init();
-        
        
-        en.addEntities(lion);
-        
-        CircleShape circle = new CircleShape();
-        circle.setRadius(50f);
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = circle;
-        fixtureDef.density = 2f;
-        fixtureDef.friction = 1f;
-        fixtureDef.restitution = 0.6f;
-        Fixture fixture = lion.getComponent(Body2D.class).getBody().createFixture(fixtureDef);
-        fixture.setUserData(lion);
         
         GameObject floor = new GameObject();
         floor.setComponent(new Transform2D(0, 90));
@@ -75,7 +52,7 @@ public class FirstScreen implements Screen {
 
         PolygonShape groundBox = new PolygonShape();
         groundBox.setAsBox(en.getCamera().viewportWidth, 10.0f);
-        fixture = floor.getComponent(Body2D.class).getBody().createFixture(groundBox, 0.0f);
+        Fixture fixture = floor.getComponent(Body2D.class).getBody().createFixture(groundBox, 0.0f);
         fixture.setUserData(floor);
 
         GameObject background = new GameObject();
@@ -124,6 +101,31 @@ public class FirstScreen implements Screen {
         background.init();
         en.addEntities(background);
 
+        GameObject lion = new GameObject();
+        lion.setComponent(new Transform2D(100, 300));
+        lion.setComponent(new Body2D(BodyType.DynamicBody));
+        lion.setComponent(new Health());
+        lion.setComponent(new Sprite2D("lion.png"));
+        lion.getComponent(Sprite2D.class).size = new Vector2(100, 100);
+        lion.getComponent(Sprite2D.class).offset = new Vector2(-50, -50);
+
+        lion.setComponent(new Control());
+
+        lion.init();
+        
+       
+        en.addEntities(lion);
+        
+        CircleShape circle = new CircleShape();
+        circle.setRadius(50f);
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = circle;
+        fixtureDef.density = 2f;
+        fixtureDef.friction = 1f;
+        fixtureDef.restitution = 0.6f;
+        fixture = lion.getComponent(Body2D.class).getBody().createFixture(fixtureDef);
+        fixture.setUserData(lion);
+        
         GameObject light = new GameObject();
         light.setComponent(new Transform2D(300, 531));
         light.setComponent(new Light(300f));

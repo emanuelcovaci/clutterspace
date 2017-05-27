@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
@@ -35,6 +36,9 @@ public class AssetLoader {
 		load("lion.png", Texture.class);
 		load("pidgey.png", Texture.class);
 		load("background.mp3", Music.class);
+		load("corn.png", Texture.class);
+		load("corn_projectile.png", Texture.class);
+		load("demo.tmx", TiledMap.class);
    	}
 	
 	/**
