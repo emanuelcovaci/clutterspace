@@ -33,12 +33,12 @@ import com.tmc.clutterspace.core.utility.AssetLoader;
 public class FirstScreen implements Screen {
     final Main game;
 
-    Texture backgroundTexture;
+
 
     private Music music_level1;
     Vector2 vec = new Vector2(0,0);
     World w;
-    GameObject lion, floor;
+    GameObject lion, floor,background;
     Box2DDebugRenderer debugRenderer;
 
     public  FirstScreen(final Main game){
@@ -82,16 +82,26 @@ public class FirstScreen implements Screen {
         groundBox.setAsBox(game.cam.viewportWidth, 10.0f);
         fixture = floor.getComponent(Body2D.class).getBody().createFixture(groundBox, 0.0f);
         fixture.setUserData(floor);
+
+        background = new GameObject();
+        background.setComponent(new Transform2D(0, 0));
+        background.setComponent(new Body2D(w, BodyType.StaticBody));
+        background.setComponent(new Sprite2D("background.jpg"));
+        background.getComponent(Sprite2D.class).size = new Vector2(800, 600);
+        background.getComponent(Sprite2D.class).offset = new Vector2(0, 0);
+
+        background.init();
      
         
 
         debugRenderer = new Box2DDebugRenderer();
 
-        backgroundTexture = AssetLoader.get("background.jpg", Texture.class);
+
         music_level1 = AssetLoader.get("background.mp3", Music.class);
     }
     @Override
     public void render(float v) {
+        background.prepare();
     	lion.prepare();
     	floor.prepare();
     	lion.update(5/60f);
@@ -108,13 +118,13 @@ public class FirstScreen implements Screen {
         game.batch.begin();
         
 
-        game.batch.draw(backgroundTexture, 0, 0, game.viewport.getWorldWidth(), game.viewport.getWorldHeight());
 
-
+        background.render(game.batch);
         lion.render(game.batch);
     	floor.render(game.batch);
         lion.onGui(game.batch);
     	floor.render(game.batch);
+
         
 
         game.batch.end();
