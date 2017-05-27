@@ -17,7 +17,7 @@ public class Light extends Component {
 
     public Light(RayHandler rayHandler,Integer rays,Float distance,Integer x,Integer y){
 
-        pointLight = new PointLight(rayHandler,rays, Color.CYAN,distance,x,y);
+        pointLight = new PointLight(rayHandler,rays, new Color(165,44,52,1),distance,x,y);
 
 
     }

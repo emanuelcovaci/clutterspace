@@ -38,7 +38,7 @@ public class FirstScreen implements Screen {
     private Music music_level1;
     Vector2 vec = new Vector2(0,0);
     World w;
-    GameObject lion, floor,background,light;
+    GameObject lion, floor,background,light,light2,light3;
     Box2DDebugRenderer debugRenderer;
     RayHandler rayHandler;
 
@@ -99,7 +99,15 @@ public class FirstScreen implements Screen {
 
 
         light = new GameObject();
-        light.setComponent(new Light(rayHandler,500,1000f,700,500));
+        light.setComponent(new Light(rayHandler,500,100f,125,295));
+
+        light2 = new GameObject();
+        light2.setComponent(new Light(rayHandler,500,100f,470,495));
+
+
+
+        light3 = new GameObject();
+        light3.setComponent(new Light(rayHandler,500,100f,600,280));
         
 
         debugRenderer = new Box2DDebugRenderer();
