@@ -19,16 +19,15 @@ public class State{
 	/**
 	 * The values array of the {@link State}.
 	 */
-	public ArrayList<Integer> values = new ArrayList<Integer>();
+	public byte[] values = new byte[]{};
 
 	/**
 	 * The constructor. It saves the UUID of the linked {@link GameObject} and the type of {@link Component}.
 	 * @param component The {@link Component} of which state we create.
 	 */
 	public State(Component component){
-//		typeId = component;
+		typeId = Component.Dictionary.get(component.getClass());
 	}
-	
 	
 	/**
 	 * Empty contructor.
@@ -41,13 +40,14 @@ public class State{
 	 * Get the serializable content of the {@link State}.
 	 * @return The serialized content.
 	 */
-	public ArrayList<Integer> getSerializableData(){
-		if(values.isEmpty()) return new ArrayList<Integer>();
-		ArrayList<Integer> barr = new ArrayList<Integer>();
-		barr.add(typeId);
-		barr.add(values.size());
-		barr.addAll(values);
-		return barr;
+	public byte[] serialize(){
+		if(values.length == 0) return new byte[]{};
+
+		ByteBuffer buf = ByteBuffer.allocate(8 + values.length);
+		buf.putInt(typeId);
+		buf.putInt(values.length);
+		buf.put(values);
+		return buf.array();
 	}
 	
 	/**
@@ -56,16 +56,12 @@ public class State{
 	 * @return The deserialized {@link State}
 	 */
 	public static State deserialize(byte [] barr){
-		IntBuffer intBuf = ByteBuffer.wrap(barr)
-				     				 .order(ByteOrder.BIG_ENDIAN)
-				     				 .asIntBuffer();
-		int[] a = new int[intBuf.limit()];
-		intBuf.get(a);
+		ByteBuffer buf = ByteBuffer.wrap(barr); 
 		State s = new State();
-		s.typeId = a[0];
-		for(int i = 2; i < a[1] + 2; i++){
-			s.values.add(a[i]);
-		}
+		s.typeId = buf.getInt();
+		int nr = buf.getInt();
+		s.values = new byte[nr];
+		buf.get(s.values);
 		return s;
 	}
 }

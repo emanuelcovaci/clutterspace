@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.tmc.clutterspace.core.engine.GameObject;
 import com.tmc.clutterspace.core.engine.State;
+import com.tmc.clutterspace.core.engine.components.Component;
 import com.tmc.clutterspace.core.engine.components.Transform2D;
 import com.tmc.clutterspace.core.utility.AssetLoader;
 
@@ -31,14 +32,16 @@ public class Main extends Game {
 		GameObject obj = new GameObject();
 		obj.setComponent(new Transform2D(new Vector2(2, 3)));
 		try {
-			System.out.println(obj.serialize().length);
-			ArrayList<State> a = GameObject.deserialize(obj.serialize());
-			System.out.println(a.get(0).typeId);
+			System.out.println(obj.serializeRenderStates().length);
+			ArrayList<State> a = GameObject.deserializeRenderStates(obj.serializeRenderStates());
+			System.out.println(Component.Dictionary.inverse().get(a.get(0).typeId)
+					);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+		System.out.println(Component.Dictionary);
         cam = new OrthographicCamera(800, 600);
         viewport = new StretchViewport(800, 600, cam);
 	    batch = new SpriteBatch();

@@ -1,5 +1,10 @@
 package com.tmc.clutterspace.core.engine.components;
 
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
+import java.util.Arrays;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.tmc.clutterspace.core.engine.State;
 
@@ -11,6 +16,10 @@ import com.tmc.clutterspace.core.engine.State;
  *
  */
 public class Transform2D extends Component {
+	static{
+		register(Transform2D.class);
+	}
+	
 	/**
 	   * Position vector({@link Vector2D} used for rendering.
 	   */
@@ -27,7 +36,17 @@ public class Transform2D extends Component {
 	   */
 	public Transform2D(Vector2 p) {
 		this.p = p.cpy();
+	}
+	
+	/**
+	 *  Constructor for the {@link Transform2D} component.
+	 * @param x The initial x-axis position.
+	 * @param y The initial y-axis position.
+	 */
+	public Transform2D(float x, float y) {
+		this.p = new Vector2(x, y);
 	} 
+
 
 	@Override
 	protected void updateImpl(float delta) {
@@ -36,7 +55,7 @@ public class Transform2D extends Component {
 	}
 
 	@Override
-	protected void renderImpl() {
+	protected void renderImpl(SpriteBatch batch) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -54,7 +73,7 @@ public class Transform2D extends Component {
 	}
 
 	@Override
-	protected void onGuiImpl() {
+	protected void onGuiImpl(SpriteBatch batch) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -67,10 +86,13 @@ public class Transform2D extends Component {
 
 	@Override
 	public State getState() {
-		// TODO Auto-generated method stub
+		ByteBuffer buf = ByteBuffer.allocate(12);
 		State s =  new State(this);
-		s.values.add(1);
-		s.typeId = 7;
+		buf.putFloat(p.x);
+		buf.putFloat(p.y);
+		buf.putFloat(a);
+		s.values = buf.array();
+		
 		return s;
 	}
 	

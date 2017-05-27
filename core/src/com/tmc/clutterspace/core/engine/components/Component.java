@@ -3,6 +3,10 @@ package com.tmc.clutterspace.core.engine.components;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.tmc.clutterspace.core.engine.GameObject;
 import com.tmc.clutterspace.core.engine.State;
 import com.tmc.clutterspace.core.exceptions.ComponentNotFoundException;
@@ -15,10 +19,27 @@ import com.tmc.clutterspace.core.exceptions.MissingDependencyException;
  * @author roadd
  *
  */
+@SuppressWarnings("unchecked")
 public abstract class Component {
+	public static BiMap<Class<? extends Component>, Integer> Dictionary = HashBiMap.create();
+	protected static int lastId = 0;
+	
+	static {
+		register(Component.class);
+	}
+	
 	protected GameObject gameObject = null;
 	private ArrayList<Class<? extends Component>> dependencies = new ArrayList<Class<? extends Component>>();
 	private boolean init = false;
+	
+	/**
+	 * Registers a new {@link Component}.
+	 * @param clazz The {@link Component Component(s)} {@link Class} to be registered.
+	 */
+	protected static <T extends Component> void register(Class<T> clazz){
+		Dictionary.put(clazz, lastId);
+		lastId++;
+	}
 	
 	/**
 	   * Returns the {@link GameObject} this {@link Component} is attached to.
@@ -141,42 +162,46 @@ public abstract class Component {
 	   * Wrapper function for {@link #renderImpl()}.
 	   * <p>
 	   * Call this function to render the {@link Component}.
+	   * @param batch The render batch.
 	   */
-	public void render(){
+	public void render(SpriteBatch batch){
 		if(!init) throw new RuntimeException();
 		forceCheckDependencies();
-		renderImpl();
+		renderImpl(batch);
 	}
 	
 	/**
 	   * This function should be overridden to add the implementation 
 	   * of the {@link #render()}.
+	   * @param batch The render batch.
 	   */
-	protected abstract void renderImpl();
+	protected abstract void renderImpl(SpriteBatch batch);
 	
 	/**
 	   * Wrapper function for {@link #onGuiImpl()}.
 	   * <p>
 	   * Call this function to draw on gui for the {@link Component}.
+	   * @param batch The render batch.
 	   */
-	public void onGui(){
+	public void onGui(SpriteBatch batch){
 		if(!init) throw new RuntimeException();
 		forceCheckDependencies();
-		onGuiImpl();
+		onGuiImpl(batch);
 	}
 	
 	/**
 	   * This function should be overridden to add the implementation 
 	   * of the {@link #onGui()}.
+	   * @param batch The render batch.
 	   */
-	protected abstract void onGuiImpl();
+	protected abstract void onGuiImpl(SpriteBatch batch);
 
 	/**
 	 * Return all dependecies of this {@link Component}.
 	 * @return The dependencies.
 	 */
 	public ArrayList<Class<? extends Component>> getDependencies() {
-		return (ArrayList<Class<? extends Component>>) Collections.unmodifiableList(dependencies);
+		return dependencies;
 	}
 	
 	/**
