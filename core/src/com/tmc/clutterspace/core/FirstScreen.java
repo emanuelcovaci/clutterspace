@@ -84,9 +84,9 @@ public class FirstScreen implements Screen {
         background.setComponent(new Sprite2D("background01.png"));
         background.getComponent(Sprite2D.class).size = new Vector2(en.getCamera().viewportWidth, en.getCamera().viewportHeight);
 
-//        rock = new GameObject();
+//        GameObject rock = new GameObject();
 //        rock.setComponent(new Transform2D(125,295));
-//        rock.setComponent(new Body2D(w, BodyType.StaticBody));
+//        rock.setComponent(new Body2D( BodyType.StaticBody));
 //
 //        rock.init();
 //
@@ -95,9 +95,9 @@ public class FirstScreen implements Screen {
 //        fixture = rock.getComponent(Body2D.class).getBody().createFixture(rockBox, 0.0f);
 //        fixture.setUserData(rock);
 //
-//        rock2 = new GameObject();
+//        GameObject rock2 = new GameObject();
 //        rock2.setComponent(new Transform2D(470,495));
-//        rock2.setComponent(new Body2D(w, BodyType.StaticBody));
+//        rock2.setComponent(new Body2D( BodyType.StaticBody));
 //
 //        rock2.init();
 //
@@ -107,9 +107,9 @@ public class FirstScreen implements Screen {
 //        fixture.setUserData(rock2);
 //
 //
-//        rock3 = new GameObject();
+//        GameObject rock3 = new GameObject();
 //        rock3.setComponent(new Transform2D(600,280));
-//        rock3.setComponent(new Body2D(w, BodyType.StaticBody));
+//        rock3.setComponent(new Body2D(BodyType.StaticBody));
 //
 //        rock3.init();
 //
@@ -126,7 +126,8 @@ public class FirstScreen implements Screen {
 
         GameObject light = new GameObject();
         light.setComponent(new Transform2D(300, 531));
-        light.setComponent(new Light(300f));
+        light.setComponent(new Light(200f));
+        light.getComponent(Light.class).getPointLight().setColor(255, 0, 0, 140);
         
         light.init();
         en.addEntities(light);
@@ -141,7 +142,8 @@ public class FirstScreen implements Screen {
 
         GameObject light3 = new GameObject();
         light3.setComponent(new Transform2D(1440, 504));
-        light3.setComponent(new Light(300f));
+        light3.setComponent(new Light(200f));
+        light3.getComponent(Light.class).getPointLight().setColor(255, 0, 0, 140);
         
 
         light3.init();
