@@ -1,6 +1,7 @@
 package com.tmc.clutterspace.core;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.Graphics.DisplayMode;
@@ -28,6 +29,8 @@ public class Main extends Game {
 		obj.setComponent(new Transform2D(new Vector2(2, 3)));
 		try {
 			System.out.println(obj.serialize().length);
+			ArrayList<State> a = GameObject.deserialize(obj.serialize());
+			System.out.println(a.get(0).typeId);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

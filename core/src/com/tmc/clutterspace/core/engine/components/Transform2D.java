@@ -70,6 +70,7 @@ public class Transform2D extends Component {
 		// TODO Auto-generated method stub
 		State s =  new State(this);
 		s.values.add(1);
+		s.typeId = 7;
 		return s;
 	}
 	

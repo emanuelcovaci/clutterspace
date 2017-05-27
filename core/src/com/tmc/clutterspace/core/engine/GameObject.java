@@ -3,7 +3,11 @@ package com.tmc.clutterspace.core.engine;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
 
 import com.google.common.collect.ClassToInstanceMap;
@@ -109,9 +113,9 @@ public class GameObject {
 
 		
 		for(Component c : components.values()){
-			ArrayList<Integer> a = c.getState().getContent();
+			ArrayList<Integer> a = c.getState().getSerializableData();
 			if(a.isEmpty()) barr.set(1, barr.get(1) - 1);
-			else barr.addAll(c.getState().getContent());
+			else barr.addAll(a);
 		}
 		
 		if(barr.get(1) == 0) return new byte[]{};
@@ -122,6 +126,27 @@ public class GameObject {
 			out.writeInt(val);
 		
 		return baos.toByteArray();
+	}
+	
+	public static ArrayList<State> deserialize(byte[] barr){
+		ArrayList<State> states = new ArrayList<State>();
+		IntBuffer intBuf = ByteBuffer.wrap(barr)
+				     				 .order(ByteOrder.BIG_ENDIAN)
+				     				 .asIntBuffer();
+		int[] a = new int[intBuf.limit()];
+		intBuf.get(a);
+		
+		int nr = a[1];
+		
+		int i = 2;
+		while(nr > 0){
+			int nrVal = a[i+1];
+			states.add(State.deserialize(Arrays.copyOfRange(barr, i * 4, (i + 2 + nrVal) * 4)));
+			i += 2 + nrVal;
+			nr--;
+		}
+		
+		return states;
 	}
 	
 	
