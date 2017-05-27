@@ -33,8 +33,8 @@ import com.tmc.clutterspace.core.utility.AssetLoader;
 public class FirstScreen implements Screen {
     final Main game;
 
-    Texture texture2, backgroundTexture;
-    private Sprite sprite2;
+    Texture backgroundTexture;
+
     private Music music_level1;
     Vector2 vec = new Vector2(0,0);
     World w;
@@ -86,18 +86,9 @@ public class FirstScreen implements Screen {
         
 
         debugRenderer = new Box2DDebugRenderer();
-//        BodyDef bodyDef = new BodyDef();
-//	    // We set our body to dynamic, for something like ground which doesn't move we would set it to StaticBody
-//	    bodyDef.type = BodyType.DynamicBody;
-//	    // Set our body's starting position in the world
-//	    bodyDef.position.set(100, 300);
-//
-//        b = w.createBody(bodyDef);
-        
+
         backgroundTexture = AssetLoader.get("background.jpg", Texture.class);
-        texture2 = AssetLoader.get("pidgey.png", Texture.class);
         music_level1 = AssetLoader.get("background.mp3", Music.class);
-        sprite2 = new Sprite(texture2);
     }
     @Override
     public void render(float v) {
@@ -125,10 +116,10 @@ public class FirstScreen implements Screen {
         lion.onGui(game.batch);
     	floor.render(game.batch);
         
-        sprite2.draw(game.batch);
+
         game.batch.end();
 
-//        debugRenderer.render(w, game.cam.combined);
+      debugRenderer.render(w, game.cam.combined);
     }
 
     @Override
