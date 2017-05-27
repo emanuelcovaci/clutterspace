@@ -38,7 +38,7 @@ public class FirstScreen implements Screen {
     private Music music_level1;
     Vector2 vec = new Vector2(0,0);
     World w;
-    GameObject lion, floor,background,light,light2,light3;
+    GameObject lion, floor,background,light,light2,light3,rock,rock2,rock3,groundRock;
     Box2DDebugRenderer debugRenderer;
     RayHandler rayHandler;
 
@@ -77,12 +77,50 @@ public class FirstScreen implements Screen {
         floor.setComponent(new Body2D(w, BodyType.StaticBody));
         
         floor.init();
-        
+
 
         PolygonShape groundBox = new PolygonShape();
         groundBox.setAsBox(game.cam.viewportWidth, 10.0f);
         fixture = floor.getComponent(Body2D.class).getBody().createFixture(groundBox, 0.0f);
         fixture.setUserData(floor);
+
+
+        rock = new GameObject();
+        rock.setComponent(new Transform2D(125,295));
+        rock.setComponent(new Body2D(w, BodyType.StaticBody));
+
+        rock.init();
+
+        PolygonShape rockBox = new PolygonShape();
+        rockBox.setAsBox(30, 5.0f);
+        fixture = rock.getComponent(Body2D.class).getBody().createFixture(rockBox, 0.0f);
+        fixture.setUserData(rock);
+
+        rock2 = new GameObject();
+        rock2.setComponent(new Transform2D(470,495));
+        rock2.setComponent(new Body2D(w, BodyType.StaticBody));
+
+        rock2.init();
+
+        PolygonShape rockBox2 = new PolygonShape();
+        rockBox2.setAsBox(30, 5.0f);
+        fixture = rock2.getComponent(Body2D.class).getBody().createFixture(rockBox2, 0.0f);
+        fixture.setUserData(rock2);
+
+
+        rock3 = new GameObject();
+        rock3.setComponent(new Transform2D(600,280));
+        rock3.setComponent(new Body2D(w, BodyType.StaticBody));
+
+        rock3.init();
+
+        PolygonShape rockBox3 = new PolygonShape();
+        rockBox3.setAsBox(30, 5.0f);
+        fixture = rock3.getComponent(Body2D.class).getBody().createFixture(rockBox3, 0.0f);
+        fixture.setUserData(rock3);
+
+
+
 
         background = new GameObject();
         background.setComponent(new Transform2D(0, 0));
@@ -120,10 +158,13 @@ public class FirstScreen implements Screen {
         background.prepare();
     	lion.prepare();
     	floor.prepare();
+    	rock.prepare();
     	lion.update(5/60f);
     	floor.update(5/60f);
+        rock.update(5/60f);
     	lion.postUpdate();
     	floor.postUpdate();
+    	rock.postUpdate();
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         music_level1.setLooping(true);
@@ -138,14 +179,16 @@ public class FirstScreen implements Screen {
         background.render(game.batch);
         lion.render(game.batch);
     	floor.render(game.batch);
+    	rock.render(game.batch);
         lion.onGui(game.batch);
     	floor.render(game.batch);
+        rock.render(game.batch);
 
 
         game.batch.end();
         rayHandler.updateAndRender();
 
-        debugRenderer.render(w, game.cam.combined);
+       debugRenderer.render(w, game.cam.combined);
     }
 
     @Override
