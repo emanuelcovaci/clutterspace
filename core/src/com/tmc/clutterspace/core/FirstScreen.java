@@ -1,10 +1,13 @@
 package com.tmc.clutterspace.core;
 
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -40,6 +43,7 @@ public class FirstScreen implements Screen {
     World w;
     GameObject lion, floor,background;
     Box2DDebugRenderer debugRenderer;
+    RayHandler rayHandler;
 
     public  FirstScreen(final Main game){
 
@@ -91,6 +95,11 @@ public class FirstScreen implements Screen {
         background.getComponent(Sprite2D.class).offset = new Vector2(0, 0);
 
         background.init();
+
+        rayHandler = new RayHandler(w);
+        rayHandler.setCombinedMatrix(game.cam);
+        rayHandler.setShadows(false);
+        new PointLight(rayHandler,5000,Color.CYAN,1000,700,500);
      
         
 
@@ -116,7 +125,7 @@ public class FirstScreen implements Screen {
 
         game.batch.setProjectionMatrix(game.cam.combined);
         game.batch.begin();
-        
+
 
 
         background.render(game.batch);
@@ -125,11 +134,14 @@ public class FirstScreen implements Screen {
         lion.onGui(game.batch);
     	floor.render(game.batch);
 
+
+
         
 
         game.batch.end();
+        rayHandler.updateAndRender();
 
-      debugRenderer.render(w, game.cam.combined);
+//        debugRenderer.render(w, game.cam.combined);
     }
 
     @Override
