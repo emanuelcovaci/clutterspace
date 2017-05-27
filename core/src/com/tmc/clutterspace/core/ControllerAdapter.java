@@ -1,5 +1,9 @@
 package com.tmc.clutterspace.core;
 
+/**
+ * Created by  on 5/27/2017.
+ */
+
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
@@ -36,13 +40,13 @@ public class ControllerAdapter implements ControllerListener {
 
     @Override
     public boolean buttonDown (Controller controller, int buttonIndex) {
-        System.out.println("#" + indexOf(controller) + ", button " + buttonIndex + " down");
+        System.out.println("#" + indexOf(controller) + ", button " + Buttons.findByValue(buttonIndex) + " down");
         return false;
     }
 
     @Override
     public boolean buttonUp (Controller controller, int buttonIndex) {
-        System.out.println("#" + indexOf(controller) + ", button " + buttonIndex + " up");
+        System.out.println("#" + indexOf(controller) + ", button " + Buttons.findByValue(buttonIndex) + " up");
         return false;
     }
 
@@ -50,7 +54,7 @@ public class ControllerAdapter implements ControllerListener {
     public boolean axisMoved (Controller controller, int axisIndex, float value) {
         String Valoare = String.format(Locale.ROOT, "%.2f", value);
         if(value>0.5 || value<-0.5)
-            System.out.println("#" + indexOf(controller) + ", axis " + axisIndex + ": " + Valoare);
+            System.out.println("#" + indexOf(controller) + ", axis " + Axes.findByValue(axisIndex) + ": " + Valoare);
         return false;
     }
 
@@ -62,13 +66,13 @@ public class ControllerAdapter implements ControllerListener {
 
     @Override
     public boolean xSliderMoved (Controller controller, int sliderIndex, boolean value) {
-        System.out.println("#" + indexOf(controller) + ", x slider " + sliderIndex + ": " + value);
+        System.out.println("#" + indexOf(controller) + ", x slider " + Axes.findByValue(sliderIndex) + ": " + value);
         return false;
     }
 
     @Override
     public boolean ySliderMoved (Controller controller, int sliderIndex, boolean value) {
-        System.out.println("#" + indexOf(controller) + ", y slider " + sliderIndex + ": " + value);
+        System.out.println("#" + indexOf(controller) + ", y slider " + Axes.findByValue(sliderIndex) + ": " + value);
         return false;
     }
     @Override
