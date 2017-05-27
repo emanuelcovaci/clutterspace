@@ -1,35 +1,24 @@
 package com.tmc.clutterspace.core;
 
-import box2dLight.PointLight;
-import box2dLight.RayHandler;
-
 import java.io.IOException;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.tmc.clutterspace.core.engine.Engine;
 import com.tmc.clutterspace.core.engine.GameObject;
-import com.tmc.clutterspace.core.engine.components.*;
+import com.tmc.clutterspace.core.engine.components.Body2D;
+import com.tmc.clutterspace.core.engine.components.Component;
+import com.tmc.clutterspace.core.engine.components.Control;
+import com.tmc.clutterspace.core.engine.components.Health;
+import com.tmc.clutterspace.core.engine.components.Light;
+import com.tmc.clutterspace.core.engine.components.Sprite2D;
+import com.tmc.clutterspace.core.engine.components.Transform2D;
 import com.tmc.clutterspace.core.utility.AssetLoader;
 
 /**
@@ -63,6 +52,8 @@ public class FirstScreen implements Screen {
         lion.setComponent(new Control());
 
         lion.init();
+        
+       
         en.addEntities(lion);
         
         CircleShape circle = new CircleShape();
@@ -90,7 +81,7 @@ public class FirstScreen implements Screen {
         GameObject background = new GameObject();
         background.setComponent(new Transform2D(0, 0));
         background.setComponent(new Body2D(BodyType.StaticBody));
-        background.setComponent(new Sprite2D("background.jpg"));
+        background.setComponent(new Sprite2D("background01.png"));
         background.getComponent(Sprite2D.class).size = new Vector2(en.getCamera().viewportWidth, en.getCamera().viewportHeight);
 
 //        rock = new GameObject();
@@ -134,19 +125,19 @@ public class FirstScreen implements Screen {
         en.addEntities(background);
 
         GameObject light = new GameObject();
-        light.setComponent(new Light(500,100f,125,295));
+        light.setComponent(new Light(500,300f,300,531));
         
         light.init();
         en.addEntities(light);
 
         GameObject light2 = new GameObject();
-        light2.setComponent(new Light(500,1000f,470,495));
+        light2.setComponent(new Light(500,300f,1128,891));
 
         light2.init();
         en.addEntities(light2);
 
         GameObject light3 = new GameObject();
-        light3.setComponent(new Light(500,1000f,600,280));
+        light3.setComponent(new Light(500,300f,1440,504));
         
 
         light3.init();
@@ -155,12 +146,12 @@ public class FirstScreen implements Screen {
         music_level1 = AssetLoader.get("background.mp3", Music.class);
 
 		System.out.println(Component.Dictionary);
-//        try {
-//			System.out.println(en.decodeSnapshots(en.createSnapshot()));
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+        try {
+			System.out.println(en.decodeSnapshots(en.createSnapshot()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     @Override
     public void render(float v) {

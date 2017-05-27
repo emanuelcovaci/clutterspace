@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -37,7 +38,8 @@ public class Engine {
     private long startTime;
     private long currentTime;
     public float step = 1/60f;
-    public int latency = 100;
+    public int latency = 50;
+    public int snapRate = 2;
     private int gameTick = 0;
     public boolean debug = false;
     
@@ -108,6 +110,7 @@ public class Engine {
 		buf = ByteBuffer.allocate(4);
 		for(GameObject obj : entities.values()){
 			byte[] ser = obj.serialize();
+			if(ser.length == 0) continue;
 			ret = (byte[])ArrayUtils.addAll(ret, buf.putInt(ser.length).array());
 			buf.clear();
 			ret = (byte[])ArrayUtils.addAll(ret, ser);
@@ -146,7 +149,7 @@ public class Engine {
 	public void update(){
 		setCurrentTime();
 		if(gameTick == 0) startTime = currentTime;
-		if(gameTick % 25 == 0)
+		if(gameTick % snapRate == 0)
 			try {
 				snapshots.add(createSnapshot());
 			} catch (IOException e) {
@@ -163,16 +166,56 @@ public class Engine {
 	
 	public void render()
 	{	
+		if(getTime() - latency < 0) return;
+		
+		byte[] s = null;
+		byte[] p = null;
+		float perc = 0;
+		while(s == null){
+			s = snapshots.get(1);
+			ByteBuffer buf = ByteBuffer.wrap(s);
+			long time = buf.getLong();
+			if(getTime() - latency > time){
+				System.out.println(1);
+				snapshots.pop();
+				s = null;
+			}
+			else{
+				p = snapshots.get(0);
+				long aux = ByteBuffer.wrap(p).getLong();
+				long delta = time - aux;
+				long timeDif = getTime() - latency - aux;
+				perc = timeDif * 1.0f / delta;
+				System.out.println(2);
+			}		
+			System.out.println(s);
+		}
+		
+		ArrayList<GameObject> entities = interpolate(decodeSnapshots(p), decodeSnapshots(s),perc);
+		
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
-		entities.values().stream().forEach(a -> a.render(batch));
-		entities.values().stream().forEach(a -> a.onGui(batch));
+		entities.stream().forEach(a -> a.render(batch));
+		entities.stream().forEach(a -> a.onGui(batch));
 		batch.end();
         rayHandler.updateAndRender();
         if(debug)
         	debugRenderer.render(world, cam.combined);
 	}
 
+	@SuppressWarnings("unchecked")
+	private ArrayList<GameObject> interpolate(ArrayList<GameObject> first, ArrayList<GameObject> sec, float perc){
+		HashMap<Integer, GameObject> secDict = new HashMap();
+		sec.stream().forEach(a -> secDict.put(a.id, a));
+		
+		ArrayList<GameObject> ret = new ArrayList<GameObject>();
+		for(GameObject obj : first){
+			GameObject temp = obj.interpolate(secDict.getOrDefault(obj.id, null), perc);		
+			temp.init();
+			ret.add(temp);
+		}
+		return ret;
+	}
 }

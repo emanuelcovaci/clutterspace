@@ -171,6 +171,7 @@ public class GameObject {
 	public static GameObject deserialize(byte[] barr){
 		ArrayList<State> states = new ArrayList<State>();
 		ByteBuffer buf = ByteBuffer.wrap(barr);
+		System.out.println(barr.length);
 		int id = buf.getInt();
 		int nr = buf.getInt();
 		while(nr > 0){
@@ -204,10 +205,20 @@ public class GameObject {
 	public GameObject interpolate(GameObject other, float perc){
 		GameObject ret = new GameObject();
 		
+		if(other == null) return null;
 		if(other.isDisposed()) return null;
 		
-		for(Component c : components.values()){}
-//			ret.setComponent(c.int);
+		for(Component c : components.values()){
+			Component oc;
+			try{
+				oc = other.getComponent(c.getClass());
+			}
+			catch(ComponentNotFoundException e){
+				oc = null;
+			}
+			
+			ret.setComponent(c.interpolate(oc, perc));
+		}
 		
 		return ret;
 	}

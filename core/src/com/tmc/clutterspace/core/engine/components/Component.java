@@ -236,6 +236,7 @@ public abstract class Component {
 	}
 	
 	public Component interpolate(Component other, float perc){
+		if(other == null) return null;
 		if(isDisposed()) return null;
 		return interpolateImpl(other, perc);
 	}

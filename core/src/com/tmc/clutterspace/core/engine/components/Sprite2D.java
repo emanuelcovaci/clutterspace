@@ -177,6 +177,14 @@ public class Sprite2D extends Component {
 
 	@Override
 	public Component interpolateImpl(Component other, float perc) {
-		return other;
+		Sprite2D oth = (Sprite2D) other;
+		Sprite2D ret = new Sprite2D(oth.texName);
+		ret.offset = oth.offset;
+		ret.size = oth.size;
+		ret.rotate = oth.rotate;
+		ret.flippedX = oth.flippedX;
+		ret.flippedY = oth.flippedY;
+		
+		return ret;
 	}
 }
