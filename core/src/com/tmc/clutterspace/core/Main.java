@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.Graphics.DisplayMode;
+import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -24,6 +25,13 @@ public class Main extends Game {
 
 	@Override
 	public void create () {
+
+		Controller jucarie = GamePad.test();
+
+		jucarie.addListener(new ControllerAdapter());
+		MyInputProcessor inputProcessor = new MyInputProcessor();
+		Gdx.input.setInputProcessor(inputProcessor);
+
 		AssetLoader loader = AssetLoader.getInstance();
 		loader.assets.finishLoading();
 		GameObject obj = new GameObject();
