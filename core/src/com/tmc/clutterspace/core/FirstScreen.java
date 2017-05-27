@@ -100,7 +100,7 @@ public class FirstScreen implements Screen {
 
         light = new GameObject();
         light.setComponent(new Light(rayHandler,500,1000f,700,500));
-        
+
 
         debugRenderer = new Box2DDebugRenderer();
 
