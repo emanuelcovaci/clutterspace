@@ -22,6 +22,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.tmc.clutterspace.core.engine.GameObject;
 import com.tmc.clutterspace.core.engine.components.Body2D;
+import com.tmc.clutterspace.core.engine.components.Control;
 import com.tmc.clutterspace.core.engine.components.Sprite2D;
 import com.tmc.clutterspace.core.engine.components.Transform2D;
 import com.tmc.clutterspace.core.utility.AssetLoader;
@@ -54,7 +55,9 @@ public class FirstScreen implements Screen {
         lion.setComponent(new Sprite2D("lion.png"));
         lion.getComponent(Sprite2D.class).size = new Vector2(100, 100);
         lion.getComponent(Sprite2D.class).offset = new Vector2(-50, -50);
-        
+
+        lion.setComponent(new Control());
+
         lion.init();
         
 
@@ -180,7 +183,7 @@ public class FirstScreen implements Screen {
         sprite2.draw(game.batch);
         game.batch.end();
 
-        debugRenderer.render(w, game.cam.combined);
+//        debugRenderer.render(w, game.cam.combined);
     }
 
     @Override
