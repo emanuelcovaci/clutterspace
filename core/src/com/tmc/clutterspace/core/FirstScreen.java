@@ -96,18 +96,11 @@ public class FirstScreen implements Screen {
         rayHandler = new RayHandler(w);
         rayHandler.setCombinedMatrix(game.cam);
         rayHandler.setShadows(false);
-//        new PointLight(rayHandler,5000,Color.CYAN,1000,700,500);
+
 
         light = new GameObject();
         light.setComponent(new Light(rayHandler,500,1000f,700,500));
-
-
-
-
-
-
-
-
+        
 
         debugRenderer = new Box2DDebugRenderer();
 
