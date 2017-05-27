@@ -127,7 +127,7 @@ public class FirstScreen implements Screen {
 //                sprite.translateY(-10.0f);
 //        }
         if(Gdx.input.isKeyPressed(Input.Keys.R)){
-            b.setTransform(50,50,50);
+            b.setTransform(50,110,50);
 
         }
 
