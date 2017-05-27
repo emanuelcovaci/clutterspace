@@ -42,8 +42,6 @@ public class Sprite2D extends Component {
 	@Override
 	protected void renderImpl(SpriteBatch batch) {
 		Transform2D trans = getGameObject().getComponent(Transform2D.class);
-//		batch.draw?
-		System.out.println(tex.getWidth());
 		batch.draw(tex, trans.p.x + offset.x, trans.p.y + offset.y, offset.x, offset.y, size.x, size.y, 1, 1, rotate ? trans.a : 0,  0, 0, tex.getWidth(), tex.getHeight(), flippedX, flippedY);
 	}
 

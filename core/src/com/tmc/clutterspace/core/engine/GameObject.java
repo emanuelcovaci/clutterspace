@@ -113,23 +113,30 @@ public class GameObject {
 	 * @throws IOException
 	 */
 	public byte[] serializeRenderStates() throws IOException{
-		ArrayList<Integer> barr = new ArrayList<Integer>();
-		barr.add(id);
-		barr.add(components.size());
+		ArrayList<byte[]> barr = new ArrayList<byte[]>();
+		ByteBuffer buf = ByteBuffer.allocate(4);
+		barr.add(buf.putInt(id).array());
+		
+		int nr = 0;
 
-		
+		ArrayList<byte[]> barr2 = new ArrayList<byte[]>();
 		for(Component c : components.values()){
-			ArrayList<Integer> a = c.getState().getSerializableData();
-			if(a.isEmpty()) barr.set(1, barr.get(1) - 1);
-			else barr.addAll(a);
+			byte[] a = c.getState().serialize();
+			if(a.length != 0){
+				nr++;
+				barr2.add(a);
+			}
 		}
-		
-		if(barr.get(1) == 0) return new byte[]{};
+		if(nr == 0) return new byte[]{};
+
+		buf.clear();
+		barr.add(buf.putInt(nr).array());
+		barr.addAll(barr2);
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		DataOutputStream out = new DataOutputStream(baos);
-		for(Integer val : barr)
-			out.writeInt(val);
+		for(byte[] val : barr)
+			out.write(val);
 		
 		return baos.toByteArray();
 	}
@@ -141,19 +148,16 @@ public class GameObject {
 	 */
 	public static ArrayList<State> deserializeRenderStates(byte[] barr){
 		ArrayList<State> states = new ArrayList<State>();
-		IntBuffer intBuf = ByteBuffer.wrap(barr)
-				     				 .order(ByteOrder.BIG_ENDIAN)
-				     				 .asIntBuffer();
-		int[] a = new int[intBuf.limit()];
-		intBuf.get(a);
-		
-		int nr = a[1];
-		
-		int i = 2;
+		ByteBuffer buf = ByteBuffer.wrap(barr);
+		buf.getInt();
+		int nr = buf.getInt();
 		while(nr > 0){
-			int nrVal = a[i+1];
-			states.add(State.deserialize(Arrays.copyOfRange(barr, i * 4, (i + 2 + nrVal) * 4)));
-			i += 2 + nrVal;
+			buf.getInt();
+			int nrVal = buf.getInt();
+			byte[] arr = new byte[nrVal + 8];
+			buf.position(buf.position() - 8);
+			buf.get(arr, 0, nrVal + 8);
+			states.add(State.deserialize(arr));
 			nr--;
 		}
 		
@@ -161,32 +165,26 @@ public class GameObject {
 	}
 	
 	public void init(){
-		for(Component c : components.values())
-			c.init();
+		components.values().stream().forEach(a -> a.init());
 	}
 	
 	public void prepare(){
-		for(Component c : components.values())
-			c.prepare();
+		components.values().stream().forEach(a -> a.prepare());
 	}
 	
 	public void update(float delta){
-		for(Component c : components.values())
-			c.update(delta);
+		components.values().stream().forEach(a -> a.update(delta));
 	}
 	
 	public void postUpdate(){
-		for(Component c : components.values())
-			c.postUpdate();
+		components.values().stream().forEach(a -> a.postUpdate());
 	}
 	
 	public void render(SpriteBatch batch){
-		for(Component c : components.values())
-			c.render(batch);
+		components.values().stream().forEach(a -> a.render(batch));
 	}
 	
 	public void onGui(SpriteBatch batch){
-		for(Component c : components.values())
-			c.onGui(batch);
+		components.values().stream().forEach(a -> a.onGui(batch));
 	}
 }

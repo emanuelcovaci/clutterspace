@@ -1,5 +1,9 @@
 package com.tmc.clutterspace.core.engine.components;
 
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
+import java.util.Arrays;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.tmc.clutterspace.core.engine.State;
@@ -82,9 +86,13 @@ public class Transform2D extends Component {
 
 	@Override
 	public State getState() {
-		// TODO Auto-generated method stub
+		ByteBuffer buf = ByteBuffer.allocate(12);
 		State s =  new State(this);
-		s.values.add(1);
+		buf.putFloat(p.x);
+		buf.putFloat(p.y);
+		buf.putFloat(a);
+		s.values = buf.array();
+		
 		return s;
 	}
 	

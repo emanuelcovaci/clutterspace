@@ -32,6 +32,10 @@ public abstract class Component {
 	private ArrayList<Class<? extends Component>> dependencies = new ArrayList<Class<? extends Component>>();
 	private boolean init = false;
 	
+	/**
+	 * Registers a new {@link Component}.
+	 * @param clazz The {@link Component Component(s)} {@link Class} to be registered.
+	 */
 	protected static <T extends Component> void register(Class<T> clazz){
 		Dictionary.put(clazz, lastId);
 		lastId++;
