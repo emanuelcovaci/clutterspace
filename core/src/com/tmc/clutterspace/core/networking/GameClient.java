@@ -2,8 +2,12 @@ package com.tmc.clutterspace.core.networking;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
+import java.nio.*;
 import java.nio.channels.DatagramChannel;
+import java.util.ArrayList;
+
+import com.tmc.clutterspace.core.engine.GameObject;
+import com.tmc.clutterspace.core.engine.State;
 
 /**
  * Created by softmandar on 26.05.2017.
@@ -23,19 +27,17 @@ public class GameClient {
         server_address = new InetSocketAddress("10.1.0.68",8080);
     }
 
-    /*public void send_info() throws ClassNotFoundException, IOException{
-        ByteBuffer client_buff = ByteBuffer.allocate(MAX_BUFF);
-        client_buff.clear();
-        client_buff.put("SoftMandar".getBytes());
-        client_buff.clear();
-        client_buff.flip();
-        client_channel.send(client_buff, server_address);
-        System.out.println(client_channel.receive(client_buff).toString());
-    }*/
-    public void send_data(){
+    public void send_data(GameObject obj) throws IOException{
+            ByteBuffer plbuff_out = ByteBuffer.allocate(MAX_BUFF);
+            plbuff_out.clear();
 
     }
-    public void recieve_data(){
+
+    public ArrayList<State> recieve_data()throws IOException{
+            ByteBuffer plbuff_in  = ByteBuffer.allocate(MAX_BUFF);
+            plbuff_in.clear();
+            client_channel.receive(plbuff_in);
+            return (ArrayList<State>)State.deserialize(plbuff_in.array());
 
     }
 }

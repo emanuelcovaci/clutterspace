@@ -6,7 +6,9 @@ import java.nio.*;
 import java.nio.channels.DatagramChannel;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
+import com.tmc.clutterspace.core.engine.GameObject;
 
 /**
  * Created by softmandar on 26.05.2017.
@@ -49,9 +51,19 @@ public class GameRoom {
             if(playeraddr == player.getKey() && player.getValue().is_ready()){
                 return true;
             }
+
         }
         return false;
     }
+    public static <T,E> E get_player(Map<T, E>map, T key){
+        for(Map.Entry<T,E> entry : map.entrySet()){
+            if(Objects.equals(key,entry.getKey())){
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
+
     public void get_ready() throws IOException{
         String ready_state = "Yes";
         ByteBuffer get_ready  = ByteBuffer.allocate(MAX_BYTES);
@@ -62,6 +74,8 @@ public class GameRoom {
                 get_ready.put(ready_state.getBytes());
                 get_ready.flip();
                 server_ch.send(get_ready, ready_player);
+            }else{
+                get_player(connpl,ready_player).is_ready = true;
             }
 
         }

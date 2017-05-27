@@ -6,6 +6,7 @@ import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.util.HashMap;
+import com.tmc.clutterspace.core.engine.State;
 
 /**
  * Created by softmandar on 26.05.2017.
@@ -65,6 +66,10 @@ public class GameServer {
      *
      */
     public void get_players(){
+
+    }
+
+    public void get_loadout(){
 
     }
 }
