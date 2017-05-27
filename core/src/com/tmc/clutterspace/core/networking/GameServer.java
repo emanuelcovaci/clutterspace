@@ -18,6 +18,12 @@ public class GameServer {
     public static void main(String[] args) throws IOException{
         new GameServer(new InetSocketAddress("10.1.0.68",8080));
     }
+
+    /**
+     * 
+     * @param listen_address
+     * @throws IOException
+     */
     GameServer(InetSocketAddress listen_address) throws IOException{
         try{
             server_channel = DatagramChannel.open();
@@ -32,6 +38,10 @@ public class GameServer {
         start_game();
     }
 
+    /**
+     *
+     * @throws IOException
+     */
     public void start_game() throws IOException{
         boolean running = true;
         ByteBuffer player_buff = ByteBuffer.allocate(MAX_SIZE);
@@ -50,6 +60,10 @@ public class GameServer {
 
         }
     }
+
+    /**
+     *
+     */
     public void get_players(){
 
     }

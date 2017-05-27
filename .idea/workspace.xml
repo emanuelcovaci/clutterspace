@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="beae6ed7-edb9-44e3-b258-49af93aee116" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameClient.java" afterPath="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameRoom.java" afterPath="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameRoom.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameServer.java" afterPath="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameServer.java" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -55,8 +53,8 @@
       <file leaf-file-name="GameServer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="39" column="53" lean-forward="true" selection-start-line="39" selection-start-column="53" selection-end-line="39" selection-end-column="53" />
+            <state relative-caret-position="145">
+              <caret line="22" column="7" lean-forward="true" selection-start-line="22" selection-start-column="7" selection-end-line="22" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -818,9 +816,9 @@
         <option value="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/engine/State.java" />
         <option value="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/Main.java" />
         <option value="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/ClientHandler.java" />
-        <option value="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameServer.java" />
         <option value="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameClient.java" />
         <option value="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameRoom.java" />
+        <option value="$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameServer.java" />
       </list>
     </option>
   </component>
@@ -1418,8 +1416,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/tmc/clutterspace/core/networking/GameServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="39" column="53" lean-forward="true" selection-start-line="39" selection-start-column="53" selection-end-line="39" selection-end-column="53" />
+        <state relative-caret-position="145">
+          <caret line="22" column="7" lean-forward="true" selection-start-line="22" selection-start-column="7" selection-end-line="22" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -1,5 +1,8 @@
 package com.tmc.clutterspace.core;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.Graphics.DisplayMode;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -7,7 +10,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.tmc.clutterspace.core.engine.GameObject;
 import com.tmc.clutterspace.core.engine.State;
+import com.tmc.clutterspace.core.engine.components.Transform2D;
 import com.tmc.clutterspace.core.utility.AssetLoader;
 
 import java.io.IOException;
@@ -22,6 +27,7 @@ public class Main extends Game {
 	public void create () {
 		AssetLoader loader = AssetLoader.getInstance();
 		loader.assets.finishLoading();
+<<<<<<< HEAD
 		State s = new State();
 		s.values.put("pos", 2);
 		State news = null;
@@ -36,6 +42,19 @@ public class Main extends Game {
 		}
 
 		System.out.println(news.equals(s));
+=======
+		GameObject obj = new GameObject();
+		obj.setComponent(new Transform2D(new Vector2(2, 3)));
+		try {
+			System.out.println(obj.serialize().length);
+			ArrayList<State> a = GameObject.deserialize(obj.serialize());
+			System.out.println(a.get(0).typeId);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+>>>>>>> origin
         cam = new OrthographicCamera(800, 600);
         viewport = new StretchViewport(800, 600, cam);
 	    batch = new SpriteBatch();
@@ -48,7 +67,6 @@ public class Main extends Game {
     }
 
 	public void render() {
-		System.out.println(vec);
 	    super.render();
 
 	}
