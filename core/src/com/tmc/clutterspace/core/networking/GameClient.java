@@ -15,7 +15,7 @@ public class GameClient {
     public static InetSocketAddress server_address;
 
     public static void main(String[] args) throws IOException, ClassNotFoundException{
-        new GameClient().send_info();
+        new GameClient();
     }
     GameClient() throws IOException{
         client_channel = DatagramChannel.open();
@@ -23,7 +23,7 @@ public class GameClient {
         server_address = new InetSocketAddress("10.1.0.68",8080);
     }
 
-    public void send_info() throws ClassNotFoundException, IOException{
+    /*public void send_info() throws ClassNotFoundException, IOException{
         ByteBuffer client_buff = ByteBuffer.allocate(MAX_BUFF);
         client_buff.clear();
         client_buff.put("SoftMandar".getBytes());
@@ -31,5 +31,11 @@ public class GameClient {
         client_buff.flip();
         client_channel.send(client_buff, server_address);
         System.out.println(client_channel.receive(client_buff).toString());
+    }*/
+    public void send_data(){
+
+    }
+    public void recieve_data(){
+
     }
 }

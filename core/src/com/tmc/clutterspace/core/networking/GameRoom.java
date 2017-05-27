@@ -26,16 +26,18 @@ public class GameRoom {
     public void connect_players()throws IOException{
         ByteBuffer player_buff = ByteBuffer.allocate(MAX_BYTES);
         while(not_ready){
+            player_buff.clear();
             SocketAddress client_addr = server_ch.receive(player_buff);
             System.out.println("Player just connected with address" + client_addr.toString());
             connpl.put(client_addr, new ClientHandler(new String(player_buff.array())));
             for(Map.Entry<SocketAddress, ClientHandler> player: connpl.entrySet()){
+                System.out.println("Sebd to " + player.getKey().toString());
                 player_buff.clear();
-                player_buff.flip();
                 player_buff.put(player.getValue().plusername.getBytes());
+                player_buff.flip();
                 server_ch.send(player_buff, player.getKey());
             }
-            if(connpl.size() >= MAX_PLAYERS){
+            if(connpl.size() == MAX_PLAYERS){
                 not_ready = false;
                 get_ready();
             }
@@ -57,8 +59,8 @@ public class GameRoom {
             SocketAddress ready_player = server_ch.receive(get_ready);
             if(verify_player(ready_player)){
                 get_ready.clear();
-                get_ready.flip();
                 get_ready.put(ready_state.getBytes());
+                get_ready.flip();
                 server_ch.send(get_ready, ready_player);
             }
 

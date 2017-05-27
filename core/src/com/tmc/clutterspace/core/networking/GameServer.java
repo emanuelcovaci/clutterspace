@@ -50,4 +50,7 @@ public class GameServer {
 
         }
     }
+    public void get_players(){
+
+    }
 }
