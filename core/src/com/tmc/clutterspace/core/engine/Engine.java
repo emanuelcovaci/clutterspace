@@ -28,7 +28,7 @@ import box2dLight.RayHandler;;
 public class Engine {
 	private static Engine instance = null;
 	
-	private HashMap<Integer, GameObject> entities;
+	private HashMap<Long, GameObject> entities;
 	private World world;
     private RayHandler rayHandler;
     private Box2DDebugRenderer debugRenderer;
@@ -46,7 +46,7 @@ public class Engine {
 
 	private Engine(){
 		world = new World(new Vector2(0, 0), true);
-		entities = new HashMap<Integer, GameObject>();
+		entities = new HashMap<Long, GameObject>();
 		rayHandler = new RayHandler(world);
 		batch = new SpriteBatch();
         cam = new OrthographicCamera(1920, 1080);
@@ -76,7 +76,7 @@ public class Engine {
 		return batch;
 	}
 	
-	public HashMap<Integer, GameObject> getEntities() {
+	public HashMap<Long, GameObject> getEntities() {
 		return entities;
 	}
 
@@ -201,18 +201,19 @@ public class Engine {
 		entities.stream().forEach(a -> a.onGui(batch));
 		batch.end();
         rayHandler.updateAndRender();
+        rayHandler.removeAll();
         if(debug)
         	debugRenderer.render(world, cam.combined);
 	}
 
 	@SuppressWarnings("unchecked")
 	private ArrayList<GameObject> interpolate(ArrayList<GameObject> first, ArrayList<GameObject> sec, float perc){
-		HashMap<Integer, GameObject> secDict = new HashMap();
+		HashMap<Long, GameObject> secDict = new HashMap();
 		sec.stream().forEach(a -> secDict.put(a.id, a));
 		
 		ArrayList<GameObject> ret = new ArrayList<GameObject>();
 		for(GameObject obj : first){
-			GameObject temp = obj.interpolate(secDict.getOrDefault(obj.id, null), perc);		
+			GameObject temp = obj.interpolate(secDict.getOrDefault(obj.id, null), perc);	
 			temp.init();
 			ret.add(temp);
 		}

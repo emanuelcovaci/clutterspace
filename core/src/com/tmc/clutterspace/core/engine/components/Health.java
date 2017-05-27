@@ -1,5 +1,7 @@
 package com.tmc.clutterspace.core.engine.components;
 
+import java.nio.ByteBuffer;
+
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -71,13 +73,27 @@ public class Health extends Component {
     }
 
     @Override
-    public State getState() {
-        return null;
-    }
+	public State getState() {
+		ByteBuffer buf = ByteBuffer.allocate(12);
+		State s = new State(this);
+		buf.putInt(health);
+		s.values = buf.array();
+		
+		return s;
+	}
+	
+	public static Component fromState(State s){
+		ByteBuffer buf = ByteBuffer.wrap(s.values);
+		Health comp = new Health();
+		comp.health = buf.getInt();
+		return comp;
+	}
 
 	@Override
 	public Component interpolateImpl(Component other, float perc) {
-		// TODO Auto-generated method stub
-		return null;
+		Health comp = new Health();
+		Health oth = (Health) other;
+		comp.health = (int) (this.health * (1 - perc) + oth.health * perc); 
+		return comp;
 	}
 }

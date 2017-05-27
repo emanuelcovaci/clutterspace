@@ -36,7 +36,7 @@ public class GameObject {
 	/**
 	 * Identification id of this {@link GameObject}.
 	 */
-	public int id;
+	public long id;
 
 	/**
 	 * Give an unique id to the last created {@link GameObject}.
@@ -59,8 +59,8 @@ public class GameObject {
 		id = GameObject.takeInEvidence();
 	}
 	
-	protected GameObject(int id){
-		this.id = id;
+	protected GameObject(long id2){
+		this.id = id2;
 	}
 	
 	/**
@@ -70,7 +70,6 @@ public class GameObject {
 	   * @throws LinkedComponentException (optional)
 	   */
 	public <T extends Component> void setComponent(T comp){
-		System.out.println(comp.getGameObject());
 		if(comp.getGameObject() != null)
 			throw new LinkedComponentException();
 		if(hasComponent(comp.getClass())){
@@ -134,8 +133,8 @@ public class GameObject {
 	 */
 	public byte[] serialize() throws IOException{
 		ArrayList<byte[]> barr = new ArrayList<byte[]>();
-		ByteBuffer buf = ByteBuffer.allocate(8);
-		buf.putInt(id);
+		ByteBuffer buf = ByteBuffer.allocate(12);
+		buf.putLong(id);
 		
 		int nr = 0;
 
@@ -171,8 +170,7 @@ public class GameObject {
 	public static GameObject deserialize(byte[] barr){
 		ArrayList<State> states = new ArrayList<State>();
 		ByteBuffer buf = ByteBuffer.wrap(barr);
-		System.out.println(barr.length);
-		int id = buf.getInt();
+		long id = buf.getLong();
 		int nr = buf.getInt();
 		while(nr > 0){
 			buf.getInt();
@@ -216,8 +214,9 @@ public class GameObject {
 			catch(ComponentNotFoundException e){
 				oc = null;
 			}
-			
-			ret.setComponent(c.interpolate(oc, perc));
+			Component ooc = c.interpolate(oc, perc);
+			if(ooc == null) continue;
+			ret.setComponent(ooc);
 		}
 		
 		return ret;
