@@ -63,7 +63,7 @@ public class Health extends Component {
 
         String x = Float.toString(getHealth());
 
-        font.draw(batch,x, 700, 580);
+        font.draw(batch,x, 1700, 1000);
 
     }
 

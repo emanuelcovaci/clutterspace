@@ -16,7 +16,7 @@ public class PlayerFactory {
 		player.setComponent(new Transform2D(100, 300));
 		player.setComponent(new Body2D(BodyType.DynamicBody, true));
 		player.setComponent(new Health());
-		player.setComponent(new Sprite2D("lion.png"));
+		player.setComponent(new Sprite2D("Viking.png"));
 		player.getComponent(Sprite2D.class).size = new Vector2(30, 40);
 		player.getComponent(Sprite2D.class).offset = new Vector2(-15, -20);
 		player.setComponent(new GroundSensor());
