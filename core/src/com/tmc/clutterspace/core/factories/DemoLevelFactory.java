@@ -13,10 +13,10 @@ public class DemoLevelFactory {
 	public static void create(){
 		GameObject map = new GameObject();
 		map.setComponent(new TileMap("levels/demo.tmx"));
-		map.setComponent(new TileMapBackground(new int[]{0,1,2}));
+		map.setComponent(new TileMapBackground(new int[]{0,1}));
 		map.setComponent(new Transform2D(0, 0));
 		map.setComponent(new Body2D(BodyType.StaticBody));
-		map.setComponent(new TileMapShapes(new int[]{3}));
+		map.setComponent(new TileMapShapes(new int[]{2}));
 		
 		map.init();
 		Engine.getInstance().addEntities(map);
