@@ -110,6 +110,7 @@ public abstract class Component {
 		if(isDisposed()) return;
 		if(!init) {
 			init = true;
+			System.out.println(this);
 			forceCheckDependencies();
 			initImpl();
 		}

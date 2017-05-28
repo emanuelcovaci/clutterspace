@@ -7,15 +7,15 @@ import com.tmc.clutterspace.core.utility.AssetLoader;
 
 import java.io.IOException;
 
-public class Main extends Game {
+public class Client extends Game {
     Vector2 vec = new Vector2(0, 0);
 
 	@Override
-	public void create () {
+	public void create() {
 		AssetLoader loader = AssetLoader.getInstance();
 		loader.assets.finishLoading();
 
-        this.setScreen(new FirstScreen(this));
+        this.setScreen(new FirstScreen(this, false));
 	}
 
 	public void resize(int w, int h){

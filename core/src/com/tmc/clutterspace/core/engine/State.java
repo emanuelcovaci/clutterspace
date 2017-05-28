@@ -42,7 +42,7 @@ public class State{
 	 */
 	public byte[] serialize(){
 		if(values.length == 0) return new byte[]{};
-
+		System.out.println(Component.Dictionary.inverse().get(typeId) + " " + values.length);
 		ByteBuffer buf = ByteBuffer.allocate(8 + values.length);
 		buf.putInt(typeId);
 		buf.putInt(values.length);

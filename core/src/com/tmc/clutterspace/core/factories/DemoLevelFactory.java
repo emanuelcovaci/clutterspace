@@ -12,12 +12,12 @@ import com.tmc.clutterspace.core.engine.components.Transform2D;
 public class DemoLevelFactory {
 	public static void create(){
 		GameObject map = new GameObject();
-		map.setComponent(new TileMap("levels/demo.tmx"));
-		map.setComponent(new TileMapBackground(new int[]{0,1}));
 		map.setComponent(new Transform2D(0, 0));
 		map.setComponent(new Body2D(BodyType.StaticBody));
+		map.setComponent(new TileMap("levels/demo.tmx"));
+		map.setComponent(new TileMapBackground(new int[]{0,1}));
 		map.setComponent(new TileMapShapes(new int[]{2}));
-		
+		System.out.println(map);
 		map.init();
 		Engine.getInstance().addEntities(map);
 		

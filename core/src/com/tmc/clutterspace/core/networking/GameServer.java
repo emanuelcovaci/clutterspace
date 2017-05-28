@@ -6,7 +6,8 @@ import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.util.HashMap;
-import com.tmc.clutterspace.core.engine.State;
+
+import javafx.util.Pair;
 
 /**
  * Created by softmandar on 26.05.2017.
@@ -14,10 +15,13 @@ import com.tmc.clutterspace.core.engine.State;
 public class GameServer {
 
     HashMap<SocketAddress, ClientHandler> connected_players;
+    public static String SERVER_ADRESS = "10.1.0.68";
+    public static int PORT = 8080;
     private DatagramChannel server_channel;
-    private static final int MAX_SIZE = 1000000;
+    private static final int MAX_SIZE = 1024;
+    private static final int MAX_PLAYERS = 4;
     public static void main(String[] args) throws IOException{
-        new GameServer(new InetSocketAddress("10.1.0.68",8080));
+        new GameServer(new InetSocketAddress(SERVER_ADRESS,8080));
     }
 
     /**
@@ -35,7 +39,7 @@ public class GameServer {
         System.out.println("Server just started on" + listen_address.getAddress() + ":" + listen_address.getPort());
 
         connected_players = new HashMap<>();
-        new GameRoom(server_channel, connected_players).connect_players();
+        //new GameRoom(server_channel, connected_players).start_connect();
         start_game();
     }
 
@@ -43,17 +47,32 @@ public class GameServer {
      *
      * @throws IOException
      */
+    public boolean canJoin(SocketAddress client_addr, ByteBuffer player_buff){
+        if(connected_players.size() == MAX_PLAYERS){ return false; }
+        return true;
+    }
     public void start_game() throws IOException{
         boolean running = true;
         ByteBuffer player_buff = ByteBuffer.allocate(MAX_SIZE);
+        int current_size = player_buff.position();
         System.out.println("Game server just started listen for player data");
+        SocketAddress client_addr = server_channel.receive(player_buff);
+        if(canJoin(client_addr, player_buff)) {
+            System.out.println("Another player joined the server " + connected_players.size() + " players online");
+            connected_players.put(client_addr, new ClientHandler(new String(new byte[current_size]), client_addr));
+        }else{
+            System.out.println("The server is already full");
+        }
         Runnable start = () -> {
             player_buff.clear();
             try {
                 this.server_channel.receive(player_buff);
                 for(SocketAddress player_addr: connected_players.keySet()){
+                    int current_size2 = player_buff.position();
                     player_buff.flip();
-                    this.server_channel.send(player_buff,player_addr);
+                    ByteBuffer pl_trans = ByteBuffer.wrap(new byte[current_size2]);
+                    pl_trans.put(player_buff.array());
+                    this.server_channel.send(pl_trans,player_addr);
                     player_buff.clear();
                 }
             } catch (IOException e) {
@@ -64,30 +83,19 @@ public class GameServer {
 
         Thread t = new Thread(start);
         t.start();
-//        while(running){
-//            player_buff.clear();
-//            this.server_channel.receive(player_buff);
-//            if(connected_players.isEmpty()){
-//                running = false;
-//            }else{
-//                for(SocketAddress player_addr: connected_players.keySet()){
-//                    player_buff.flip();
-//                    this.server_channel.send(player_buff,player_addr);
-//                    player_buff.clear();
-//                }
-//            }
-//
-//        }
-    }
 
+    }
     /**
      *
      */
-    public void get_players(){
-
+    public Pair<SocketAddress, byte[]> recieve() throws IOException{
+        ByteBuffer plbuff = ByteBuffer.allocate(MAX_SIZE);
+        plbuff.clear();
+        SocketAddress player_addr = server_channel.receive(plbuff);
+        return new Pair<SocketAddress, byte[]>(player_addr,plbuff.array());
     }
-
-    public void get_loadout(){
+    public SocketAddress get_players() throws IOException{
+        return (SocketAddress)connected_players.keySet();
 
     }
 }

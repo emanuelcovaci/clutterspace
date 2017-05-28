@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.tmc.clutterspace.core.collision.CollisionDict;
+import com.tmc.clutterspace.core.engine.Engine;
 import com.tmc.clutterspace.core.engine.State;
 
 /**
@@ -60,17 +61,17 @@ public class Player extends  Component{
         Transform2D trans = getGameObject().getComponent(Transform2D.class);
         GroundSensor ground = getGameObject().getComponent(GroundSensor.class);
         
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+        if(Engine.Inputs.A || Engine.Inputs.LEFT){
             comp.getBody().applyLinearImpulse(-0.80f * 10000,0, trans.p.x, trans.p.y,true);
 
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        if(Engine.Inputs.D || Engine.Inputs.RIGHT) {
             comp.getBody().applyLinearImpulse(0.80f* 10000, 0, trans.p.x, trans.p.y, true);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.UP) && ground.onGround){
+        if(Engine.Inputs.SPACE && ground.onGround){
             comp.getBody().applyLinearImpulse(0,0.80f* 10000000, trans.p.x, trans.p.y,true);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.R)){
+        if(Engine.Inputs.R){
             comp.getBody().setTransform(50,50,50);
 
         }

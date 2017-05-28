@@ -81,7 +81,7 @@ public class TileMap extends Component {
 	@Override
 	public Component interpolateImpl(Component other, float perc) {
 		TileMap oth = (TileMap) other;
-		return new TileMap(oth.mapName);
+		return new TileMap(this.mapName);
 	}
 
 	public TiledMap getMap() {

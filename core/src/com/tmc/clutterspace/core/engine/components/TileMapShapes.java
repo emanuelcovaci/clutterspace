@@ -13,11 +13,15 @@ import com.tmc.clutterspace.core.collision.CollisionDict;
 import com.tmc.clutterspace.core.engine.State;
 
 public class TileMapShapes extends Component {
+	static{
+		register(TileMapShapes.class);
+	}
+	
 	protected int[] colLayers;
 	
 	public TileMapShapes(int[] colLayers){
-		getDependencies().add(TileMap.class);
 		getDependencies().add(Body2D.class);
+		getDependencies().add(TileMap.class);
 		this.colLayers = colLayers;
 	}
 	

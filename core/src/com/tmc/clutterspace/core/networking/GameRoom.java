@@ -15,8 +15,8 @@ import com.tmc.clutterspace.core.engine.GameObject;
  */
 public class GameRoom {
 
-    private static final int MAX_BYTES = 1000000;
-    private static final int MAX_PLAYERS = 6;
+    private static final int MAX_BYTES = 1024;
+    private static final int MAX_PLAYERS = 4;
     private DatagramChannel server_ch;
     private boolean not_ready = true;
     HashMap<SocketAddress, ClientHandler> connpl;
@@ -25,35 +25,47 @@ public class GameRoom {
         connpl = connected_players;
     }
 
-    public void connect_players()throws IOException{
+    public boolean canJoin(SocketAddress client_addr, ByteBuffer player_buff){
+        if(connpl.size() == MAX_PLAYERS){ return false; }
+        return true;
+    }
+    public boolean allReady(){
+        for(Map.Entry<SocketAddress, ClientHandler> player: connpl.entrySet()){
+            if(!(player.getValue().is_ready())){
+               return false;
+            }
+        }
+        return true;
+    }
+    public void start_collect() throws IOException{
+        not_ready = true;
         ByteBuffer player_buff = ByteBuffer.allocate(MAX_BYTES);
         while(not_ready){
             player_buff.clear();
-            SocketAddress client_addr = server_ch.receive(player_buff);
-            System.out.println("Player just connected with address" + client_addr.toString());
-            connpl.put(client_addr, new ClientHandler(new String(player_buff.array())));
-            for(Map.Entry<SocketAddress, ClientHandler> player: connpl.entrySet()){
-                System.out.println("Sebd to " + player.getKey().toString());
-                player_buff.clear();
-                player_buff.put(player.getValue().plusername.getBytes());
-                player_buff.flip();
-                server_ch.send(player_buff, player.getKey());
-            }
-            if(connpl.size() == MAX_PLAYERS){
-                not_ready = false;
-                //get_ready();
-            }
-
+            SocketAddress cliend_addr = server_ch.receive(player_buff);
+            get_player(connpl, cliend_addr).setReady();
         }
     }
-    public boolean verify_player(SocketAddress playeraddr){
-        for(Map.Entry<SocketAddress, ClientHandler> player: connpl.entrySet()){
-            if(playeraddr == player.getKey() && player.getValue().is_ready()){
-                return true;
+    public void start_connect() throws IOException {
+        ByteBuffer player_buff = ByteBuffer.allocate(MAX_BYTES);
+        while (not_ready) {
+            player_buff.clear();
+            SocketAddress client_addr = server_ch.receive(player_buff);
+            if (canJoin(client_addr, player_buff)) {
+                connpl.put(client_addr, new ClientHandler(new String(new byte[player_buff.position()]), client_addr));
+                System.out.println("Player just connected with address" + client_addr.toString() + " players connected " + connpl.size());
+                for (Map.Entry<SocketAddress, ClientHandler> player : connpl.entrySet()) {
+                    System.out.println("Send to " + player.getKey().toString());
+                    player_buff.clear();
+                    player_buff.put(player.getValue().plusername.getBytes());
+                    player_buff.flip();
+                    server_ch.send(player_buff, player.getKey());
+                }
+            }else{
+                System.out.println("The server room si already full please wait!!!");
             }
-
         }
-        return false;
+
     }
     public static <T,E> E get_player(Map<T, E>map, T key){
         for(Map.Entry<T,E> entry : map.entrySet()){
@@ -63,25 +75,5 @@ public class GameRoom {
         }
         return null;
     }
-
-    public void get_ready() throws IOException{
-        String ready_state = "Yes";
-        ByteBuffer get_ready  = ByteBuffer.allocate(MAX_BYTES);
-        while (not_ready) {
-            SocketAddress ready_player = server_ch.receive(get_ready);
-            if(verify_player(ready_player)){
-                get_ready.clear();
-                get_ready.put(ready_state.getBytes());
-                get_ready.flip();
-                server_ch.send(get_ready, ready_player);
-            }else
-                try{
-                    get_player(connpl,ready_player).is_ready = true;
-                }catch(NullPointerException e){
-                    e.printStackTrace();
-                }
-
-        }
-    }
-
 }
+
