@@ -111,7 +111,7 @@ public class FirstScreen implements Screen {
         en.addEntities(player);
         
         GameObject light = new GameObject();
-        light.setComponent(new Transform2D(379, 670));
+        light.setComponent(new Transform2D(379, 640));
         light.setComponent(new Light(200f));
         light.getComponent(Light.class).getPointLight().setColor(255, 0, 0, 140);
 
@@ -119,7 +119,7 @@ public class FirstScreen implements Screen {
         en.addEntities(light);
 
         GameObject light2 = new GameObject();
-        light2.setComponent(new Transform2D(1128, 891));
+        light2.setComponent(new Transform2D(1128, 861));
         light2.setComponent(new Light(300f));
         light2.getComponent(Light.class).getPointLight().setColor(255, 0, 0, 140);
 
@@ -127,13 +127,22 @@ public class FirstScreen implements Screen {
         en.addEntities(light2);
 
         GameObject light3 = new GameObject();
-        light3.setComponent(new Transform2D(1440, 504));
+        light3.setComponent(new Transform2D(1540, 504));
         light3.setComponent(new Light(200f));
         light3.getComponent(Light.class).getPointLight().setColor(255, 0, 0, 140);
 
 
         light3.init();
         en.addEntities(light3);
+
+        GameObject light4 = new GameObject();
+        light4.setComponent(new Transform2D(1740, 904));
+        light4.setComponent(new Light(200f));
+        light4.getComponent(Light.class).getPointLight().setColor(255, 0, 0, 140);
+
+
+        light4.init();
+        en.addEntities(light4);
         
         for(int i = 0; i < 5; i++)
         	en.addEntities(CornFactory.create(new Vector2(500, 500), new Vector2(0,100)));

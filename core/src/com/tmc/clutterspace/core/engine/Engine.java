@@ -205,8 +205,8 @@ public class Engine {
 		batch.end();
         rayHandler.updateAndRender();
         rayHandler.removeAll();
-//        if(debug)
-//        	debugRenderer.render(world, cam.combined);
+        if(debug)
+        	debugRenderer.render(world, cam.combined);
 	}
 
 	@SuppressWarnings("unchecked")
