@@ -187,4 +187,16 @@ public class Sprite2D extends Component {
 		
 		return ret;
 	}
+
+	@Override
+	protected void preRenderImpl(SpriteBatch batch) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
 }

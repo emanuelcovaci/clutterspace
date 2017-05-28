@@ -110,4 +110,16 @@ public class Transform2D extends Component{
 		ret.a = this.a * (1 - perc) + oth.a * perc;
 		return ret;
 	}
+
+	@Override
+	protected void preRenderImpl(SpriteBatch batch) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -246,6 +246,11 @@ public class GameObject {
 		components.values().stream().forEach(a -> a.postUpdate());
 	}
 	
+	public void preRender(SpriteBatch batch){
+		if(isDisposed()) return;
+		components.values().stream().forEach(a -> a.preRender(batch));
+	}
+	
 	public void render(SpriteBatch batch){
 		if(isDisposed()) return;
 		components.values().stream().forEach(a -> a.render(batch));
@@ -254,5 +259,10 @@ public class GameObject {
 	public void onGui(SpriteBatch batch){
 		if(isDisposed()) return;
 		components.values().stream().forEach(a -> a.onGui(batch));
+	}
+	
+	public void dispose(){
+		components.values().stream().forEach(a -> a.dispose());
+		
 	}
 }

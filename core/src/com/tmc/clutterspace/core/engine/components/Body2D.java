@@ -40,6 +40,15 @@ public class Body2D extends Component {
 	    world = Engine.getInstance().getWorld();
 	}
 	
+	public Body2D(BodyType type, boolean fixedRotation){
+		this.getDependencies().add(Transform2D.class);
+		
+		bodyDef = new BodyDef();
+	    bodyDef.type = type;
+	    bodyDef.fixedRotation = fixedRotation;
+	    world = Engine.getInstance().getWorld();
+	}
+	
 	@Override
 	protected void updateImpl(float delta) {
 		// TODO Auto-generated method stub
@@ -95,6 +104,18 @@ public class Body2D extends Component {
 	public Component interpolateImpl(Component other, float perc) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	protected void preRenderImpl(SpriteBatch batch) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose() {
+		Engine.getInstance().getWorld().destroyBody(body);
+		
 	}
 
 }

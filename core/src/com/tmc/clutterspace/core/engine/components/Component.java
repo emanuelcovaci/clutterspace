@@ -180,6 +180,26 @@ public abstract class Component {
 	/**
 	   * Wrapper function for {@link #renderImpl()}.
 	   * <p>
+	   * Call this function to prerender the {@link Component}.
+	   * @param batch The prerender batch.
+	   */
+	public void preRender(SpriteBatch batch){
+		if(isDisposed()) return;
+		if(!init) throw new RuntimeException();
+		forceCheckDependencies();
+		preRenderImpl(batch);
+	}
+	
+	/**
+	   * This function should be overridden to add the implementation 
+	   * of the {@link #render()}.
+	   * @param batch The render batch.
+	   */
+	protected abstract void preRenderImpl(SpriteBatch batch);
+	
+	/**
+	   * Wrapper function for {@link #renderImpl()}.
+	   * <p>
 	   * Call this function to render the {@link Component}.
 	   * @param batch The render batch.
 	   */
@@ -242,4 +262,6 @@ public abstract class Component {
 	}
 	
 	public abstract Component interpolateImpl(Component other, float perc);
+	
+	public abstract void dispose();
 }

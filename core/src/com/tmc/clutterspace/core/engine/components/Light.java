@@ -25,12 +25,14 @@ public class Light extends Component {
     	getDependencies().add(Transform2D.class);
         pointLight = new PointLight(Engine.getInstance().getRayHandler(), 500);
         pointLight.setDistance(distance);
+        pointLight.setXray(true);
     }
     
     public Light(float distance, boolean dummy){
     	getDependencies().add(Transform2D.class);
         pointLight = new PointLight(Engine.getInstance().getRayHandler(), 500);
         pointLight.setDistance(distance);
+        pointLight.setXray(true);
         if(dummy)pointLight.remove();
     }
     
@@ -98,5 +100,16 @@ public class Light extends Component {
 
 		comp.pointLight.setColor(oth.pointLight.getColor());
 		return comp;
+	}
+
+	@Override
+	protected void preRenderImpl(SpriteBatch batch) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose() {
+		pointLight.dispose();
 	}
 }

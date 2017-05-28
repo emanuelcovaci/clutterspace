@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
@@ -29,6 +30,7 @@ public class AssetLoader {
 	protected AssetLoader() {
 		FileHandleResolver resolver = new InternalFileHandleResolver();
 		assets = new AssetManager(resolver);
+		assets.setLoader(TiledMap.class, new TmxMapLoader(resolver));
 		
 		load("background.jpg", Texture.class);
 		load("background01.png", Texture.class);
@@ -38,7 +40,7 @@ public class AssetLoader {
 		load("background.mp3", Music.class);
 		load("corn.png", Texture.class);
 		load("corn_projectile.png", Texture.class);
-		load("demo.tmx", TiledMap.class);
+		load("levels/demo.tmx", TiledMap.class);
    	}
 	
 	/**

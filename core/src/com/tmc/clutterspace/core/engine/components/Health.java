@@ -18,7 +18,7 @@ public class Health extends Component {
     static {
         register(Health.class);
     }
-    private Integer health;
+    private float health;
     BitmapFont font ;
     GameObject iconHearth;
 
@@ -28,12 +28,12 @@ public class Health extends Component {
 
     }
 
-    public int getHealth(){
+    public float getHealth(){
         return health;
     }
 
-    public void setHealth(Integer x){
-        health =  x;
+    public void setHealth(float f){
+        health =  f;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class Health extends Component {
 
         font = new BitmapFont();
 
-        String x = Integer.toString(getHealth());
+        String x = Float.toString(getHealth());
 
         font.draw(batch,x, 700, 580);
 
@@ -76,7 +76,7 @@ public class Health extends Component {
 	public State getState() {
 		ByteBuffer buf = ByteBuffer.allocate(12);
 		State s = new State(this);
-		buf.putInt(health);
+		buf.putFloat(health);
 		s.values = buf.array();
 		
 		return s;
@@ -85,7 +85,7 @@ public class Health extends Component {
 	public static Component fromState(State s){
 		ByteBuffer buf = ByteBuffer.wrap(s.values);
 		Health comp = new Health();
-		comp.health = buf.getInt();
+		comp.health = buf.getFloat();
 		return comp;
 	}
 
@@ -93,7 +93,19 @@ public class Health extends Component {
 	public Component interpolateImpl(Component other, float perc) {
 		Health comp = new Health();
 		Health oth = (Health) other;
-		comp.health = (int) (this.health * (1 - perc) + oth.health * perc); 
+		comp.health = this.health * (1 - perc) + oth.health * perc; 
 		return comp;
+	}
+
+	@Override
+	protected void preRenderImpl(SpriteBatch batch) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
 	}
 }

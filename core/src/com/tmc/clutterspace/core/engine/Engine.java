@@ -50,9 +50,10 @@ public class Engine {
 		rayHandler = new RayHandler(world);
 		batch = new SpriteBatch();
         cam = new OrthographicCamera(1920, 1080);
+        cam.setToOrtho(false, 1920, 1080);
         debugRenderer = new Box2DDebugRenderer();
-        Viewport viewport = new StretchViewport(cam.viewportWidth, cam.viewportHeight, cam);
-		viewport.update((int)cam.viewportWidth, (int)cam.viewportHeight, true);
+//        Viewport viewport = new StretchViewport(cam.viewportWidth, cam.viewportHeight, cam);
+//		viewport.update((int)cam.viewportWidth, (int)cam.viewportHeight, true);
         rayHandler.setCombinedMatrix(cam);
         rayHandler.setShadows(false);
 	}
@@ -176,7 +177,6 @@ public class Engine {
 			ByteBuffer buf = ByteBuffer.wrap(s);
 			long time = buf.getLong();
 			if(getTime() - latency > time){
-				System.out.println(1);
 				snapshots.pop();
 				s = null;
 			}
@@ -186,9 +186,7 @@ public class Engine {
 				long delta = time - aux;
 				long timeDif = getTime() - latency - aux;
 				perc = timeDif * 1.0f / delta;
-				System.out.println(2);
 			}		
-			System.out.println(s);
 		}
 		
 		ArrayList<GameObject> entities = interpolate(decodeSnapshots(p), decodeSnapshots(s),perc);
@@ -196,6 +194,7 @@ public class Engine {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(cam.combined);
+		entities.stream().forEach(a -> a.preRender(batch));
         batch.begin();
 		entities.stream().forEach(a -> a.render(batch));
 		entities.stream().forEach(a -> a.onGui(batch));
