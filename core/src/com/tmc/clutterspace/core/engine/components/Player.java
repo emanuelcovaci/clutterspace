@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.tmc.clutterspace.core.collision.CollisionDict;
@@ -33,13 +34,18 @@ public class Player extends  Component{
         comp.init();
 		FixtureDef fixtureDef = new FixtureDef();
 		PolygonShape boxShape = new PolygonShape();
-		boxShape.setAsBox(spr.size.x, spr.size.y, new Vector2(0, 0), 0);
+		boxShape.setAsBox(spr.size.x, spr.size.y - spr.size.x / 2, new Vector2(0, 0), 0);
 		fixtureDef.shape = boxShape;
 	    fixtureDef.filter.categoryBits = CollisionDict.CATEGORY_PLAYER;
 	    fixtureDef.filter.maskBits = CollisionDict.MASK_PLAYER;
         fixtureDef.density = 2f;
         fixtureDef.friction = 1f;
         fixtureDef.restitution = 0.0f;
+        comp.getBody().createFixture(fixtureDef).setUserData(getGameObject());
+        CircleShape cerc = new CircleShape();
+        cerc.setRadius(spr.size.x);
+        cerc.setPosition(new Vector2(0, -spr.size.x / 2));
+        fixtureDef.shape = cerc;
         comp.getBody().createFixture(fixtureDef).setUserData(getGameObject());
     }
 

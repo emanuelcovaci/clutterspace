@@ -9,7 +9,6 @@ import com.tmc.clutterspace.core.engine.State;
 public class Projectile extends Component {
 	static{
 		register(Projectile.class);
-		Engine.getInstance().getWorld().setContactListener(new BulletPlayerContact());
 	}
 	
 	private float dmg;

@@ -33,7 +33,7 @@ public class CornFactory {
         fixtureDef.shape = circle;
         fixtureDef.filter.categoryBits = CollisionDict.CATEGORY_PROJECTILE;
         fixtureDef.filter.maskBits = CollisionDict.MASK_PROJECTILE;
-        fixtureDef.isSensor = true;
+//        fixtureDef.isSensor = true;
         Fixture fixture = corn.getComponent(Body2D.class).getBody().createFixture(fixtureDef);
         fixture.setUserData(corn);
 		

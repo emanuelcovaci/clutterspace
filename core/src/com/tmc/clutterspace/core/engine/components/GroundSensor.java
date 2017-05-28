@@ -12,7 +12,6 @@ import com.tmc.clutterspace.core.engine.State;
 public class GroundSensor extends Component {
 	static{
 		register(GroundSensor.class);
-	    Engine.getInstance().getWorld().setContactListener(new GroundContact());
 	}
 	
 	public GroundSensor(){
@@ -29,7 +28,7 @@ public class GroundSensor extends Component {
 		body.init();
 		FixtureDef fixtureDef = new FixtureDef();
 		PolygonShape boxShape = new PolygonShape();
-		boxShape.setAsBox(spr.size.x / 3, 10, new Vector2(0, -spr.size.y), 0);
+		boxShape.setAsBox(spr.size.x / 3, 20, new Vector2(0, -spr.size.y), 0);
 		fixtureDef.shape = boxShape;
 	    fixtureDef.filter.categoryBits = CollisionDict.CATEGORY_PLAYER;
 	    fixtureDef.filter.maskBits = CollisionDict.CATEGORY_GROUND;
