@@ -42,6 +42,10 @@ public class Engine {
     public int snapRate = 2;
     private int gameTick = 0;
     public boolean debug = false;
+    private Thread ioThread;
+    
+    private ArrayList<Pair<>byte[]> inputs;
+    private ArrayList<byte[]> outputs;
     
 
 	private Engine(){
@@ -99,11 +103,11 @@ public class Engine {
 	
 	public void startServer(){
 		entities.values().stream().forEach(GameObject::init);
+		ioThread = new Thread(() -> {
+			
+		});
 	}
 	
-	private void clientUpdate(){
-		
-	}
 	
 	public byte[] createSnapshot() throws IOException{
 		ByteBuffer buf = ByteBuffer.allocate(8);

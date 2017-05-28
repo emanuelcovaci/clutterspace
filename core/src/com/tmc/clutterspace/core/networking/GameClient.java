@@ -2,12 +2,8 @@ package com.tmc.clutterspace.core.networking;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.*;
+import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
-import java.util.ArrayList;
-
-import com.tmc.clutterspace.core.engine.GameObject;
-import com.tmc.clutterspace.core.engine.State;
 
 /**
  * Created by softmandar on 26.05.2017.
