@@ -40,6 +40,7 @@ public class AssetLoader {
 		load("background.mp3", Music.class);
 		load("corn.png", Texture.class);
 		load("corn_projectile.png", Texture.class);
+		load("Viking.png", Texture.class);
 		load("levels/demo.tmx", TiledMap.class);
    	}
 	

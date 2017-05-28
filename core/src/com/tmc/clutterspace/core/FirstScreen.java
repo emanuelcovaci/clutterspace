@@ -111,7 +111,7 @@ public class FirstScreen implements Screen {
         en.addEntities(player);
         
         GameObject light = new GameObject();
-        light.setComponent(new Transform2D(300, 531));
+        light.setComponent(new Transform2D(379, 670));
         light.setComponent(new Light(200f));
         light.getComponent(Light.class).getPointLight().setColor(255, 0, 0, 140);
 
@@ -130,7 +130,7 @@ public class FirstScreen implements Screen {
         light3.setComponent(new Transform2D(1440, 504));
         light3.setComponent(new Light(200f));
         light3.getComponent(Light.class).getPointLight().setColor(255, 0, 0, 140);
-        
+
 
         light3.init();
         en.addEntities(light3);
