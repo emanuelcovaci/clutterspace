@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.tmc.clutterspace.core.engine.components.Component;
 import com.tmc.clutterspace.core.utility.AssetLoader;
 
+import java.io.IOException;
+
 public class Main extends Game {
     Vector2 vec = new Vector2(0, 0);
 
